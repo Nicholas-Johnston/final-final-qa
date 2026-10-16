@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Nick Johnston</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <meta name="description" content="Get in touch with Nick Johnston, brand and interface designer. Email hello@nickjohnston.ca or connect on LinkedIn, Instagram, and Dribbble.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Nick Johnston">
+  <meta property="og:title" content="Contact - Nick Johnston">
+  <meta property="og:description" content="Get in touch with Nick Johnston, brand and interface designer. Email hello@nickjohnston.ca or connect on LinkedIn, Instagram, and Dribbble.">
+  <meta property="og:url" content="https://nickjohnston.ca/contact.html">
+  <meta property="og:image" content="https://nickjohnston.ca/images/og/nj-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Identities and Interfaces. Nick Johnston designs brands, apps, and websites.">
+  <meta name="twitter:card" content="summary_large_image">
+  <script>
+    /* Apply the theme before first paint to avoid a flash. A saved choice
+       from the settings menu wins; otherwise follow the system setting. */
+    try {
+      var savedTheme = localStorage.getItem('theme');
+    } catch (e) {}
+    if (savedTheme === 'light' || (savedTheme !== 'dark' &&
+        window.matchMedia('(prefers-color-scheme: light)').matches)) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+    /* Flag the intro reveal pre-paint so the text never flashes unsplit.
+       Skipped for reduced motion: stagger delays would survive the global
+       duration override and letters would pop in one by one. */
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('anim-intro');
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="contact">
+
+  <header class="site-header grid-12">
+    <p class="intro">I'm always interested in hearing about new projects and opportunities. Send me an email to tell me more about your project and we can book a time to discuss it in more detail. I look forward to hearing from&nbsp;you.</p>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html"><span class="roll"><span>Work</span><span aria-hidden="true">Work</span></span></a></li>
+        <li class="nav-archive">
+          <a href="archive.html"><span class="roll"><span>Archive</span><span aria-hidden="true">Archive</span></span></a>
+          <span class="nav-sub">
+            <span aria-hidden="true">[</span>
+            <a href="archive.html" data-view="design"><span class="roll"><span>Design</span><span aria-hidden="true">Design</span></span></a>
+            <span aria-hidden="true">/</span>
+            <a href="archive.html?view=logos" data-view="logos"><span class="roll"><span>Logos</span><span aria-hidden="true">Logos</span></span></a>
+            <span aria-hidden="true">]</span>
+          </span>
+        </li>
+        <li><a href="info.html"><span class="roll"><span>Info</span><span aria-hidden="true">Info</span></span></a></li>
+        <li><a href="contact.html" aria-current="page"><span class="roll"><span>Contact</span><span aria-hidden="true">Contact</span></span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="contact-main grid-12" aria-label="Contact">
+    <section class="contact-col contact-email-col">
+      <h2 class="contact-label">Email Me</h2>
+      <div class="email-row">
+        <a class="contact-link contact-email-link" href="mailto:hello@nickjohnston.ca"><span class="roll"><span>hello@nickjohnston.ca</span><span aria-hidden="true">hello@nickjohnston.ca</span></span></a>
+        <button class="copy-email-btn" type="button"><svg class="copy-check" width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 5.4 4.6 9 12 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="roll"><span>Copy Email</span><span aria-hidden="true">Copy Email</span></span></button>
+        <span class="sr-only" role="status" aria-live="polite"></span>
+      </div>
+    </section>
+    <section class="contact-col contact-connect-col">
+      <h2 class="contact-label">Connect</h2>
+      <ul class="connect-list">
+        <li><a class="contact-link" href="https://www.linkedin.com/in/nick-johnston-84132544/" target="_blank" rel="noopener"><span class="roll"><span>LinkedIn</span><span aria-hidden="true">LinkedIn</span></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 21 21 3M6.5 3H21v14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+        <li><a class="contact-link" href="https://www.instagram.com/nick.johnston/" target="_blank" rel="noopener"><span class="roll"><span>Instagram</span><span aria-hidden="true">Instagram</span></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 21 21 3M6.5 3H21v14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+        <li><a class="contact-link" href="https://dribbble.com/NickJohnston" target="_blank" rel="noopener"><span class="roll"><span>Dribbble</span><span aria-hidden="true">Dribbble</span></span> <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 21 21 3M6.5 3H21v14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-email-cell">
+      <a class="footer-email" href="mailto:hello@nickjohnston.ca"><span class="roll"><span>hello@nickjohnston.ca</span><span aria-hidden="true">hello@nickjohnston.ca</span></span></a>
+      <span class="footer-copied-pill" aria-hidden="true"><svg width="11" height="9" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5.4 4.6 9 12 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Copied to clipboard</span>
+      <span class="sr-only" role="status" aria-live="polite"></span>
+    </div>
+    <div class="footer-settings" role="group" aria-label="Site settings">
+      <label class="settings-toggle tg-theme" id="settings-theme">
+        <input type="checkbox" role="switch" name="theme" aria-label="Dark mode" checked>
+        <span class="settings-track" aria-hidden="true">
+          <span class="settings-knob">
+            <svg class="tg-icon-off" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 0.625V1.875M7.5 13.125V14.375M2.6375 2.6375L3.525 3.525M11.475 11.475L12.3625 12.3625M0.625 7.5H1.875M13.125 7.5H14.375M2.6375 12.3625L3.525 11.475M11.475 3.525L12.3625 2.6375M10.625 7.5C10.625 9.22589 9.22589 10.625 7.5 10.625C5.77411 10.625 4.375 9.22589 4.375 7.5C4.375 5.77411 5.77411 4.375 7.5 4.375C9.22589 4.375 10.625 5.77411 10.625 7.5Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="tg-icon-on" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.1251 7.99375C13.0267 9.05763 12.6275 10.0715 11.974 10.9167C11.3205 11.762 10.4397 12.4036 9.43488 12.7666C8.43001 13.1296 7.34255 13.1988 6.29975 12.9663C5.25695 12.7338 4.30193 12.2091 3.54645 11.4536C2.79097 10.6981 2.26627 9.74311 2.03375 8.70031C1.80123 7.65751 1.87051 6.57005 2.23347 5.56519C2.59644 4.56032 3.23808 3.6796 4.08332 3.0261C4.92856 2.37259 5.94243 1.97332 7.00631 1.875C6.38344 2.71767 6.08372 3.75591 6.16164 4.80088C6.23957 5.84586 6.68997 6.82816 7.43094 7.56912C8.1719 8.31009 9.1542 8.76049 10.1992 8.83842C11.2442 8.91634 12.2824 8.61662 13.1251 7.99375Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </span>
+      </label>
+      <button class="settings-btn" type="button" aria-expanded="false" aria-controls="settings-theme settings-sound">
+        <span class="settings-label">
+          <span class="roll lbl-settings"><span>Settings</span><span aria-hidden="true">Settings</span></span>
+          <span class="roll lbl-done" aria-hidden="true"><span>Done</span><span>Done</span></span>
+        </span>
+      </button>
+      <label class="settings-toggle tg-sound" id="settings-sound">
+        <input type="checkbox" role="switch" name="sound" aria-label="Sound" checked>
+        <span class="settings-track" aria-hidden="true">
+          <span class="settings-knob">
+            <svg class="tg-icon-off" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.61 5.16H3.95L7.46 2.24V12.77L3.95 9.84H1.61V5.16ZM10.38 6.04L13.31 8.96M13.31 6.04L10.38 8.96" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="tg-icon-on" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.61 5.16H3.95L7.46 2.24V12.77L3.95 9.84H1.61V5.16ZM10.38 5.45C10.85 5.98 11.14 6.68 11.14 7.5C11.14 8.32 10.85 9.02 10.38 9.55M12.43 3.41C13.42 4.46 14.01 5.92 14.01 7.5C14.01 9.08 13.42 10.54 12.43 11.59" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </span>
+      </label>
+    </div>
+    <p class="footer-copy"><span class="mark">©</span>Nick Johnston 2026</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script type="module" src="js/sounds.js"></script>
+</body>
+</html>

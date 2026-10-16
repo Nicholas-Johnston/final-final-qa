@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Info - Nick Johnston</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <meta name="description" content="Nick Johnston is an independent brand, web, and product designer located in Squamish, BC.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Nick Johnston">
+  <meta property="og:title" content="Info - Nick Johnston">
+  <meta property="og:description" content="Nick Johnston is an independent brand, web, and product designer located in Squamish, BC.">
+  <meta property="og:url" content="https://nickjohnston.ca/info.html">
+  <meta property="og:image" content="https://nickjohnston.ca/images/og/nj-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Identities and Interfaces. Nick Johnston designs brands, apps, and websites.">
+  <meta name="twitter:card" content="summary_large_image">
+  <script>
+    /* Apply the theme before first paint to avoid a flash. A saved choice
+       from the settings menu wins; otherwise follow the system setting. */
+    try {
+      var savedTheme = localStorage.getItem('theme');
+    } catch (e) {}
+    if (savedTheme === 'light' || (savedTheme !== 'dark' &&
+        window.matchMedia('(prefers-color-scheme: light)').matches)) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+    /* Flag the intro reveal pre-paint so the text never flashes unsplit.
+       Skipped for reduced motion: stagger delays would survive the global
+       duration override and letters would pop in one by one. */
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('anim-intro');
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="info">
+
+  <!-- Single screen: intro at the top, the accordion + headshot band pinned
+       just above the fold (reference/archive-design-update.png) -->
+  <section class="info-hero">
+    <header class="site-header grid-12">
+      <p class="intro">I believe brand matters more today than it ever has. Because I work across brand, web, and product design, I can shape your identity and protect it every step of the way, so none of the magic disappears when it's time to build your site&nbsp;or&nbsp;app.</p>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html"><span class="roll"><span>Work</span><span aria-hidden="true">Work</span></span></a></li>
+          <li class="nav-archive">
+            <a href="archive.html"><span class="roll"><span>Archive</span><span aria-hidden="true">Archive</span></span></a>
+            <span class="nav-sub">
+              <span aria-hidden="true">[</span>
+              <a href="archive.html" data-view="design"><span class="roll"><span>Design</span><span aria-hidden="true">Design</span></span></a>
+              <span aria-hidden="true">/</span>
+              <a href="archive.html?view=logos" data-view="logos"><span class="roll"><span>Logos</span><span aria-hidden="true">Logos</span></span></a>
+              <span aria-hidden="true">]</span>
+            </span>
+          </li>
+          <li><a href="info.html" aria-current="page"><span class="roll"><span>Info</span><span aria-hidden="true">Info</span></span></a></li>
+          <li><a href="contact.html"><span class="roll"><span>Contact</span><span aria-hidden="true">Contact</span></span></a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="info-band grid-12">
+      <div class="acc-col">
+        <section class="acc-item">
+          <h2 class="acc-head"><button type="button" id="acc-btn-currently" aria-expanded="false" aria-controls="acc-panel-currently"><span class="acc-title"><span class="roll"><span>Currently</span><span aria-hidden="true">Currently</span></span></span><span class="acc-sign" aria-hidden="true"></span></button></h2>
+          <div class="acc-body" id="acc-panel-currently" role="region" aria-labelledby="acc-btn-currently">
+            <div class="acc-body-inner">
+              <h3>Independent designer creating brands and interfaces for ambitious companies with a story to tell.</h3>
+              <p>Right now I’m freelancing as an independent brand, web, and product designer. I love working with early-stage founders who are defining how their brand shows up in the world, or rethinking it.</p>
+              <p>I also contract with agencies of all sizes, in whatever capacity is useful. I enjoy plugging into other teams and making great work together.</p>
+              <div class="acc-pills"><span class="acc-pill">Squamish, BC</span><span class="acc-pill">10+ years agency experience</span><span class="acc-pill">Probably biking</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="acc-item">
+          <h2 class="acc-head"><button type="button" id="acc-btn-background" aria-expanded="false" aria-controls="acc-panel-background"><span class="acc-title"><span class="roll"><span>Background</span><span aria-hidden="true">Background</span></span></span><span class="acc-sign" aria-hidden="true"></span></button></h2>
+          <div class="acc-body" id="acc-panel-background" role="region" aria-labelledby="acc-btn-background">
+            <div class="acc-body-inner">
+              <h3>A brand designer at heart, endlessly curious about the experiences screens make possible.</h3>
+              <p>For as long as I can remember, I’ve been fascinated by logos. It was always a mystery to me how one person, or one team, could create a single mark that made a company memorable to its customers. Once I was introduced to brand design, I learned it takes much more than a logo to make that happen, and I’ve been helping companies solve that problem ever since.</p>
+              <p>Today I combine my love of brand design with my experience designing websites and apps to create holistic brand experiences. Now that anyone can spin up a working prototype or website in minutes, I believe brand is the layer that makes those experiences memorable, and getting it right from the start matters more than ever.</p>
+            </div>
+          </div>
+        </section>
+        <section class="acc-item">
+          <h2 class="acc-head"><button type="button" id="acc-btn-experience" aria-expanded="false" aria-controls="acc-panel-experience"><span class="acc-title"><span class="roll"><span>Experience</span><span aria-hidden="true">Experience</span></span></span><span class="acc-sign" aria-hidden="true"></span></button></h2>
+          <div class="acc-body" id="acc-panel-experience" role="region" aria-labelledby="acc-btn-experience">
+            <div class="acc-body-inner">
+              <h3>Senior-level agency experience.</h3>
+              <ul>
+                <li>Freelance Designer, Nick Johnston (’26–Present)</li>
+                <li>Co-Founder &amp; Designer, Diver Studio (’25–’26)</li>
+                <li>Design Director, Input Logic (’21–’26)</li>
+                <li>Senior Designer, The Vacuum (’19–’21)</li>
+                <li>Product Designer, Input Logic (’15–’19)</li>
+                <li>Design Intern, Vancouver Canucks, NHL (’13–’14)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="acc-item">
+          <h2 class="acc-head"><button type="button" id="acc-btn-services" aria-expanded="false" aria-controls="acc-panel-services"><span class="acc-title"><span class="roll"><span>Services</span><span aria-hidden="true">Services</span></span></span><span class="acc-sign" aria-hidden="true"></span></button></h2>
+          <div class="acc-body" id="acc-panel-services" role="region" aria-labelledby="acc-btn-services">
+            <div class="acc-body-inner">
+              <h3>From pitch deck to product. Everything you need to launch a digital business.</h3>
+              <ul>
+                <li>Brand Strategy</li>
+                <li>Naming</li>
+                <li>Brand Identity</li>
+                <li>Logo Design</li>
+                <li>Illustration</li>
+                <li>Product Design (UX/UI)</li>
+                <li>Prototyping</li>
+                <li>Website Design</li>
+                <li>Good Vibes</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <section class="acc-item">
+          <h2 class="acc-head"><button type="button" id="acc-btn-principles" aria-expanded="false" aria-controls="acc-panel-principles"><span class="acc-title"><span class="roll"><span>Principles</span><span aria-hidden="true">Principles</span></span></span><span class="acc-sign" aria-hidden="true"></span></button></h2>
+          <div class="acc-body" id="acc-panel-principles" role="region" aria-labelledby="acc-btn-principles">
+            <div class="acc-body-inner">
+              <h3>Go wide, then refine.</h3>
+              <p>I believe good design is reductive, but to reduce something to its best form, you first have to go wide. Get maximal, leave no stone unturned, then come back and decide what can go. A great teacher once taught me that a design isn’t done until there’s nothing left to remove, and everything that remains has a reason to be there. That is design. Everything else is decoration. Less, but better.</p>
+              <h3>Design is like salt.</h3>
+              <p>Salt is essential to almost any recipe, but it’s best used with restraint. Too much and it overwhelms. Too little and something feels off. When it’s just right, you barely notice it. It sits in the background and lets the main idea sing. The skill is knowing when to add a pinch and when to stop.</p>
+              <h3>Give ideas the space to grow.</h3>
+              <p>Good work can happen quickly, and I often work in sprints, but the best work benefits from time and space to breathe. Ideas tend to surface after you’ve stepped away, when your mind is free to wander and connect dots you couldn’t see up close. Letting a project breathe brings clarity. It reveals what’s working and what can go. It’s not about slowing down. It’s about giving ideas room to grow stronger.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="info-photo">
+        <img src="images/Info/info-headshot.png" alt="Black and white portrait of Nick Johnston">
+      </div>
+    </div>
+  </section>
+
+  <!-- Office camera: a centred pill that opens the live window above it
+       (reference/info-update mocks); the label flips to Close while open -->
+  <div class="office-dock">
+  <button class="office-btn" type="button" aria-expanded="false" aria-controls="office-cam">
+    <span class="roll icon-roll" aria-hidden="true"><span><svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.6463 5.98978L10.3263 2.62954C9.5465 2.02258 8.45426 2.02258 7.67378 2.62954L3.35378 5.98978C2.82746 6.39946 2.52002 7.02874 2.52002 7.69474V12.9745C2.52002 14.1675 3.48698 15.1345 4.68002 15.1345H13.32C14.5131 15.1345 15.48 14.1675 15.48 12.9745V7.69474C15.48 7.02874 15.1726 6.39946 14.6463 5.98978Z" stroke="currentColor" stroke-width="1.5"/></svg></span><span><svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.6463 5.98978L10.3263 2.62954C9.5465 2.02258 8.45426 2.02258 7.67378 2.62954L3.35378 5.98978C2.82746 6.39946 2.52002 7.02874 2.52002 7.69474V12.9745C2.52002 14.1675 3.48698 15.1345 4.68002 15.1345H13.32C14.5131 15.1345 15.48 14.1675 15.48 12.9745V7.69474C15.48 7.02874 15.1726 6.39946 14.6463 5.98978Z" stroke="currentColor" stroke-width="1.5"/></svg></span></span>
+    <span class="roll"><span>Visit me in the office</span><span aria-hidden="true">Visit me in the office</span></span>
+  </button>
+  <div class="office-cam" id="office-cam" aria-hidden="true">
+    <video class="office-cam-media" src="images/Info/office-01.mp4" poster="images/Info/office-01-poster.jpg" muted loop playsinline preload="metadata"></video>
+    <video class="office-cam-media office-cam-wave" src="images/Info/wave-01.mp4" muted playsinline preload="none" aria-hidden="true"></video>
+    <img class="office-cam-media office-cam-offline" src="images/Info/offline-am.jpg" alt="" loading="lazy" />
+    <span class="office-cam-scrim"></span>
+    <span class="office-cam-chrome">
+    <span class="office-cam-status"><time class="office-cam-time">--:--:-- PST</time></span>
+      <span class="office-cam-meta">
+        <span class="office-cam-meta-roll">
+        <span class="office-cam-slide office-cam-location"><span class="office-cam-wicon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 15.8c1.7-1.5 5-4.9 5-8.1a5 5 0 1 0-10 0c0 3.2 3.3 6.6 5 8.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><circle cx="9" cy="7.6" r="1.9" stroke="currentColor" stroke-width="1.3"/></svg></span><span>Squamish, BC</span></span>
+        <span class="office-cam-slide office-cam-weather"><span class="office-cam-wicon"></span><span class="office-cam-temp"></span></span>
+        <span class="office-cam-slide office-cam-location"><span class="office-cam-wicon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 15.8c1.7-1.5 5-4.9 5-8.1a5 5 0 1 0-10 0c0 3.2 3.3 6.6 5 8.1Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><circle cx="9" cy="7.6" r="1.9" stroke="currentColor" stroke-width="1.3"/></svg></span><span>Squamish, BC</span></span>
+          </span>
+        </span>
+    </span>
+    <button class="office-cam-hi" type="button" aria-label="Say hi"><span class="roll icon-roll" aria-hidden="true"><span><svg width="17.1" height="18" viewBox="16.5 16.6 45.7 48.1" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M37.16,41.43l-15.89-15.89c-1.48-1.48-1.48-3.87,0-5.35h0c1.48-1.48,3.87-1.48,5.35,0l15.89,15.89" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"/><path d="M32.25,47.19l-13.33-13.33c-1.48-1.48-1.49-3.87-.02-5.33h0c1.47-1.47,3.86-1.46,5.33.02l12.9,12.9" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"/><path d="M23.87,38.8c-1.46-1.46-3.84-1.45-5.31.02h0c-1.47,1.47-1.48,3.85-.02,5.31l14.37,14.37s10.81,11.73,22.39.15c12.25-12.25,1.07-24.4,2.98-35.08.16-.9-.54-1.72-1.45-1.66-2.11.14-5.43,1.55-6.37,8.77-.12.92-1.24,1.31-1.89.66l-12.59-12.59c-1.48-1.48-3.88-1.47-5.37.02h0c-1.49,1.49-1.5,3.89-.02,5.37l11.93,11.93" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"/></svg></span><span><svg width="17.1" height="18" viewBox="16.5 16.6 45.7 48.1" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M37.16,41.43l-15.89-15.89c-1.48-1.48-1.48-3.87,0-5.35h0c1.48-1.48,3.87-1.48,5.35,0l15.89,15.89" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"/><path d="M32.25,47.19l-13.33-13.33c-1.48-1.48-1.49-3.87-.02-5.33h0c1.47-1.47,3.86-1.46,5.33.02l12.9,12.9" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"/><path d="M23.87,38.8c-1.46-1.46-3.84-1.45-5.31.02h0c-1.47,1.47-1.48,3.85-.02,5.31l14.37,14.37s10.81,11.73,22.39.15c12.25-12.25,1.07-24.4,2.98-35.08.16-.9-.54-1.72-1.45-1.66-2.11.14-5.43,1.55-6.37,8.77-.12.92-1.24,1.31-1.89.66l-12.59-12.59c-1.48-1.48-3.88-1.47-5.37.02h0c-1.49,1.49-1.5,3.89-.02,5.37l11.93,11.93" stroke="currentColor" stroke-width="2" stroke-miterlimit="10"/></svg></span></span><span class="office-cam-hi-tip" aria-hidden="true">Say hi</span></button>
+    <span class="office-cam-dnd" role="status">Nick is working, please do not disturb</span>
+  </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-email-cell">
+      <a class="footer-email" href="mailto:hello@nickjohnston.ca"><span class="roll"><span>hello@nickjohnston.ca</span><span aria-hidden="true">hello@nickjohnston.ca</span></span></a>
+      <span class="footer-copied-pill" aria-hidden="true"><svg width="11" height="9" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5.4 4.6 9 12 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Copied to clipboard</span>
+      <span class="sr-only" role="status" aria-live="polite"></span>
+    </div>
+    <div class="footer-settings" role="group" aria-label="Site settings">
+      <label class="settings-toggle tg-theme" id="settings-theme">
+        <input type="checkbox" role="switch" name="theme" aria-label="Dark mode" checked>
+        <span class="settings-track" aria-hidden="true">
+          <span class="settings-knob">
+            <svg class="tg-icon-off" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 0.625V1.875M7.5 13.125V14.375M2.6375 2.6375L3.525 3.525M11.475 11.475L12.3625 12.3625M0.625 7.5H1.875M13.125 7.5H14.375M2.6375 12.3625L3.525 11.475M11.475 3.525L12.3625 2.6375M10.625 7.5C10.625 9.22589 9.22589 10.625 7.5 10.625C5.77411 10.625 4.375 9.22589 4.375 7.5C4.375 5.77411 5.77411 4.375 7.5 4.375C9.22589 4.375 10.625 5.77411 10.625 7.5Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="tg-icon-on" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.1251 7.99375C13.0267 9.05763 12.6275 10.0715 11.974 10.9167C11.3205 11.762 10.4397 12.4036 9.43488 12.7666C8.43001 13.1296 7.34255 13.1988 6.29975 12.9663C5.25695 12.7338 4.30193 12.2091 3.54645 11.4536C2.79097 10.6981 2.26627 9.74311 2.03375 8.70031C1.80123 7.65751 1.87051 6.57005 2.23347 5.56519C2.59644 4.56032 3.23808 3.6796 4.08332 3.0261C4.92856 2.37259 5.94243 1.97332 7.00631 1.875C6.38344 2.71767 6.08372 3.75591 6.16164 4.80088C6.23957 5.84586 6.68997 6.82816 7.43094 7.56912C8.1719 8.31009 9.1542 8.76049 10.1992 8.83842C11.2442 8.91634 12.2824 8.61662 13.1251 7.99375Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </span>
+      </label>
+      <button class="settings-btn" type="button" aria-expanded="false" aria-controls="settings-theme settings-sound">
+        <span class="settings-label">
+          <span class="roll lbl-settings"><span>Settings</span><span aria-hidden="true">Settings</span></span>
+          <span class="roll lbl-done" aria-hidden="true"><span>Done</span><span>Done</span></span>
+        </span>
+      </button>
+      <label class="settings-toggle tg-sound" id="settings-sound">
+        <input type="checkbox" role="switch" name="sound" aria-label="Sound" checked>
+        <span class="settings-track" aria-hidden="true">
+          <span class="settings-knob">
+            <svg class="tg-icon-off" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.61 5.16H3.95L7.46 2.24V12.77L3.95 9.84H1.61V5.16ZM10.38 6.04L13.31 8.96M13.31 6.04L10.38 8.96" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg class="tg-icon-on" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.61 5.16H3.95L7.46 2.24V12.77L3.95 9.84H1.61V5.16ZM10.38 5.45C10.85 5.98 11.14 6.68 11.14 7.5C11.14 8.32 10.85 9.02 10.38 9.55M12.43 3.41C13.42 4.46 14.01 5.92 14.01 7.5C14.01 9.08 13.42 10.54 12.43 11.59" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </span>
+      </label>
+    </div>
+    <p class="footer-copy"><span class="mark">©</span>Nick Johnston 2026</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script type="module" src="js/sounds.js"></script>
+</body>
+</html>

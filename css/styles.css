@@ -1,0 +1,3773 @@
+/* ------------------------------------------------------------------
+   Nick Johnston — Portfolio 2026
+   Homepage (Work)
+------------------------------------------------------------------- */
+
+/* Scto Grotesk A, licensed webfonts (.woff, replaced the trial .otf on
+   2026-10-10). The site sans: everything not set in Otto or the mono
+   clock. Only the two cuts the site uses, Light and Regular, and NO
+   italic: every italic on the site is Otto, so an italic sans face
+   would never be asked for. The licence retired both the trial's
+   70-character subset AND the Suisse Intl fallback that covered it;
+   all 77 characters the four pages render are in these files.
+   Note .woff, not .woff2: these are the files the foundry supplied. */
+@font-face {
+  font-family: 'Scto Grotesk A';
+  src: url('../fonts/SctoGroteskA-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Scto Grotesk A';
+  src: url('../fonts/SctoGroteskA-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Mono for the office-camera overlay (clock + weather). Only downloaded
+   where it's actually used, i.e. the info page. */
+@font-face {
+  font-family: 'FT Polar Mono';
+  src: url('../fonts/FTPolarMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ABC Otto, licensed webfonts (.woff2, replaced the trial .otf on
+   2026-10-10). Used for the intro, project titles/taglines, the Kind
+   Words + why-me sections, the info accordion labels and the contact
+   links. */
+@font-face {
+  font-family: 'ABC Otto';
+  src: url('../fonts/ABCOtto-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ABC Otto';
+  src: url('../fonts/ABCOtto-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ABC Otto';
+  src: url('../fonts/ABCOtto-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ABC Otto';
+  src: url('../fonts/ABCOtto-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Dark theme (default). Light overrides live in [data-theme='light'] below. */
+:root {
+  --bg: #000000;
+  --fg: #ffffff;
+  --body: #ffffff;
+  --muted: rgba(255, 255, 255, 0.5);
+  --muted-strong: rgba(255, 255, 255, 0.7);
+  --label: rgba(255, 255, 255, 0.5);
+  --role: rgba(255, 255, 255, 0.5);
+  --surface: #1f1f1f;
+  /* Hover/open state for the surface pills. Sampled from
+     reference/archive-update (light #DBDADA against the #EEEEEE rest);
+     the dark value is the matching step the other way. */
+  --surface-hover: #2e2e2e;
+  --logo-card: #0d0d0d; /* logo archive card bg */
+  /* Info accordion panel card. Halfway between the logo-card #0D0D0D
+     (too dark) and the office pill's --surface #1F1F1F (too light) per
+     Nick (2026-10-10); light keeps the logo-card grey. */
+  --acc-card: #161616;
+
+  /* Mobile carousel pagination (reference/mobile-project-pagination.png).
+     The pill deliberately breaks the surface-grey rule per Nick
+     (2026-09-24): it runs LIGHTER than --surface. Light restores the
+     mock's #F6F6F6; dark uses #2D2D2D, a step lighter than surface (the
+     mock has no dark counterpart), keeping the white active dot legible. */
+  --dots-pill: #2d2d2d;
+  --dots-idle: #3d3d3d;
+  /* Mobile Menu pill literal for the nav's difference blend: it must
+     RENDER as --surface over the page bg, so light pre-inverts
+     (255 - 0x15 = 0xEA). Don't put var(--surface) here: the blend
+     would flip it. */
+  --menu-pill: #1f1f1f;
+
+  /* Footer settings menu: panel and pill both sit on --surface per Nick
+     (the refs' lighter #2D2D2D panel was retired with that change). */
+  --settings-knob: #3a3a3a; /* toggle knob; tracks sit on --surface */
+  --settings-knob-shadow: none;
+  --placeholder: #d9d9d9;
+  --menu-scrim: rgba(0, 0, 0, 0.35); /* mobile menu tint over the blur */
+  --faint: rgba(255, 255, 255, 0.22); /* info panel scrollbar thumb */
+  --live: #d6ff4c; /* "online" status dots (Currently + camera clock) */
+
+  /* Both families run a shade lighter and a shade looser on black, so
+     weight and tracking are theme tokens: Light / -1% dark, Regular / -2%
+     light. Each family has its OWN pair (they happen to match today) so
+     either can be retuned without touching the other. Every rule in that
+     family reads its trio, so these pairs are the only thing to touch. */
+  --sans: 'Scto Grotesk A', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --sans-weight: 300;
+  --sans-tracking: -0.01em;
+  --otto: 'ABC Otto', 'Scto Grotesk A', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --otto-weight: 300;
+  --otto-tracking: -0.01em;
+
+  --margin: 20px;
+  --gap: 20px;
+  --peek: 10px;
+
+  /* 3 slides visible + peek of the 4th */
+  --slides-visible: 3;
+  --slide-w: calc(
+    (100vw - var(--margin) - (var(--slides-visible) - 1) * var(--gap) - var(--gap) - var(--peek)) /
+    var(--slides-visible)
+  );
+
+  --gutter: 20px; /* 12-col grid: 20px margins + 20px gutters */
+
+  --radius: 6px; /* corner radius for image surfaces site-wide */
+
+  /* Project accordion (work-accordion refs). Light values are provisional
+     until a light-mode ref lands. */
+  --acc-label: #d1d1d1;
+  --acc-scroll: #3d3d3d; /* project panel scrollbar thumb */
+  --acc-rule: #252525;
+  --acc-body: #d1d1d1; /* detail text in the open panels */
+
+  --ease-graceful: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Softer, longer-tailed curve sampled from the Framer build of
+     nickjohnston.ca; used for the first project's slide rise-in. */
+  --ease-soft: cubic-bezier(0.23, 0.98, 0.56, 1);
+
+  /* Directional circle-arrow cursors for the archive band. The -dark
+     pair is the dark-theme default; light overrides the plain pair. */
+  --cursor-prev-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%231F1F1F'/%3E%3Cpath d='M18.2 14l-6 6 6 6M12.2 20H28' fill='none' stroke='%23FFF' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 20 20, w-resize;
+  --cursor-next-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%231F1F1F'/%3E%3Cpath d='M21.8 14l6 6-6 6M27.8 20H12' fill='none' stroke='%23FFF' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 20 20, e-resize;
+  --cursor-prev: var(--cursor-prev-dark);
+  --cursor-next: var(--cursor-next-dark);
+}
+
+/* Light theme. Values sampled from reference/Layout_Light_02.png. */
+:root[data-theme='light'] {
+  --bg: #ffffff;
+  --fg: #000000;
+  --body: #222222;
+  --muted: #aeaeae;
+  --muted-strong: rgba(0, 0, 0, 0.7);
+  --label: #bbbbbb;
+  --role: #808080;
+  --surface: #eaeaea;
+  --surface-hover: #dbdada;
+  --logo-card: #f6f6f6;
+  --acc-card: var(--logo-card);
+  --dots-pill: #f6f6f6;
+  --dots-idle: #e2e2e2;
+  --menu-pill: #151515; /* renders as --surface #EAEAEA through the blend */
+  --settings-knob: #ffffff;
+  --settings-knob-shadow: 0 0.5px 1.5px rgba(0, 0, 0, 0.18);
+  --menu-scrim: rgba(255, 255, 255, 0.35);
+  --faint: #d4d4d4;
+  --acc-label: #6f6f6f;
+  --acc-scroll: #cfcfcf;
+  --acc-rule: #eaeaea;
+  --acc-body: #222222;
+  --otto-weight: 400;
+  --otto-tracking: -0.02em;
+  --sans-weight: 400;
+  --sans-tracking: -0.02em;
+  --cursor-prev: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%23EAEAEA'/%3E%3Cpath d='M18.2 14l-6 6 6 6M12.2 20H28' fill='none' stroke='%23000' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 20 20, w-resize;
+  --cursor-next: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%23EAEAEA'/%3E%3Cpath d='M21.8 14l6 6-6 6M27.8 20H12' fill='none' stroke='%23000' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 20 20, e-resize;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* No grey flash on tap: iOS Safari and Android Chrome paint a
+   translucent box over any tapped link or button. The property
+   inherits, so the root covers every control; keyboard focus rings are
+   separate (:focus-visible) and untouched. */
+html {
+  background: var(--bg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--sans);
+  font-weight: var(--sans-weight);
+  letter-spacing: var(--sans-tracking);
+  font-synthesis: none; /* Scto has no bold; never fake one */
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* Selection is the one colour that ignores the theme: brand yellow with
+   black text (readable on yellow in both modes) per Nick */
+::selection { background: #fffc38; color: #000000; }
+
+/* ---------------------------------------------------------------
+   12-column grid
+--------------------------------------------------------------- */
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
+  padding-left: var(--margin);
+  padding-right: var(--margin);
+}
+
+/* Dev helper: press "g" to toggle a column overlay */
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
+  padding: 0 var(--margin);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.grid-overlay.on { display: grid; }
+
+.grid-overlay div { background: rgba(255, 60, 60, 0.12); }
+
+/* ---------------------------------------------------------------
+   Header
+--------------------------------------------------------------- */
+
+.site-header {
+  padding-top: var(--margin);
+  padding-bottom: var(--margin);
+}
+
+/* Body-scale ABC Otto: the intro, the Kind Words testimonials and the
+   why-me paragraph share the family, the theme's weight/tracking pair
+   and font-synthesis; the SIZES differ (intro 24/26, the two scroll
+   sections 26/30) and are set per group below. Each selector keeps its
+   own layout/colour rules in its own section. */
+.intro,
+.quote,
+.why p,
+.kind-words-label,
+.why h2 {
+  font-family: var(--otto);
+  font-weight: var(--otto-weight);
+  letter-spacing: var(--otto-tracking);
+  font-synthesis: none;
+}
+
+/* Kind Words + why-me: one step up from the intro. The two section
+   headings are the italic cut at the same size. */
+.quote,
+.why p,
+.kind-words-label,
+.why h2 {
+  font-size: 26px;
+  line-height: 30px;
+}
+
+.kind-words-label,
+.why h2 {
+  font-style: italic;
+}
+
+.intro {
+  grid-column: 1 / 6;
+  font-size: 24px;
+  line-height: 26px;
+  max-width: 465px; /* preserves the designed rag within cols 1-5 */
+}
+
+/* Load reveal. The .anim-intro flag is set pre-paint by the inline head
+   script (skipped for reduced motion). main.js splits the intro and the
+   nav labels into word/char spans (each char carries its own inline
+   transition-delay), adds .is-split once built, then .is-play to run.
+   The first project enters via the rise-in keyframes below. */
+.anim-intro .intro:not(.is-split),
+.anim-intro .site-nav:not(.is-split) { visibility: hidden; }
+
+.reveal-word { display: inline-block; white-space: nowrap; }
+
+.reveal-char {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(10px);
+  transition:
+    opacity 0.8s var(--ease-graceful),
+    filter 0.8s var(--ease-graceful),
+    transform 0.8s var(--ease-graceful);
+}
+
+.is-play .reveal-char {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+}
+
+/* Nav dots stay hidden until the nav sweep is underway (html.nav-in),
+   then fade via their existing opacity transition */
+.anim-intro:not(.nav-in) .site-nav a::after { opacity: 0; }
+
+/* First project: info, slides left to right, then arrows rise in after
+   the intro sweep. Later slides share the last stagger slot. */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rise, 24px));
+  }
+}
+
+.anim-intro .project:first-of-type .project-title,
+.anim-intro .project:first-of-type .project-acc {
+  animation: rise-in 0.9s var(--ease-graceful) 2.3s backwards;
+}
+
+.anim-intro .project:first-of-type .slide {
+  --rise: 80px;
+  animation: rise-in 2s var(--ease-soft) 2.73s backwards;
+}
+
+.anim-intro .project:first-of-type .slide:nth-child(1) { animation-delay: 2.43s; }
+.anim-intro .project:first-of-type .slide:nth-child(2) { animation-delay: 2.53s; }
+.anim-intro .project:first-of-type .slide:nth-child(3) { animation-delay: 2.63s; }
+
+.anim-intro .project:first-of-type .carousel-arrows {
+  animation: rise-in 0.9s var(--ease-graceful) 2.95s backwards;
+}
+
+/* Scroll reveals: Kind Words and Why rise in as they enter the viewport
+   (main.js adds .in-view via IntersectionObserver, once per section).
+   Staggers: label -> James quote -> Ginny quote; heading -> paragraph ->
+   primary button -> secondary button. Once settled, main.js adds
+   .is-done and every reveal rule releases: leaving transform/delay
+   overrides pinned would kill the buttons' hover scale. */
+.anim-intro .kind-words:not(.is-done) .kind-words-label,
+.anim-intro .kind-words:not(.is-done) .quote,
+.anim-intro .why:not(.is-done) h2,
+.anim-intro .why:not(.is-done) p,
+.anim-intro .why:not(.is-done) .btn {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.9s var(--ease-graceful),
+    transform 0.9s var(--ease-graceful);
+}
+
+.anim-intro .kind-words.in-view:not(.is-done) .kind-words-label,
+.anim-intro .kind-words.in-view:not(.is-done) .quote,
+.anim-intro .why.in-view:not(.is-done) h2,
+.anim-intro .why.in-view:not(.is-done) p,
+.anim-intro .why.in-view:not(.is-done) .btn {
+  opacity: 1;
+  transform: none;
+}
+
+.anim-intro .kind-words.in-view:not(.is-done) .quote:nth-child(1) { transition-delay: 0.15s; }
+.anim-intro .kind-words.in-view:not(.is-done) .quote:nth-child(2) { transition-delay: 0.3s; }
+.anim-intro .why.in-view:not(.is-done) p { transition-delay: 0.15s; }
+.anim-intro .why.in-view:not(.is-done) .btn:nth-child(1) { transition-delay: 0.3s; }
+.anim-intro .why.in-view:not(.is-done) .btn:nth-child(2) { transition-delay: 0.45s; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.site-nav {
+  /* Line rhythm between nav items. Drives BOTH the li line box and the
+     hover roll's clip height (.site-nav a --roll-h), which must match or
+     the roll shows a sliver of the second copy. 22px = 4px tighter than
+     the original 26px; the 14px labels sit on an even 4px half-leading. */
+  --nav-rhythm: 22px;
+  position: fixed;
+  top: var(--margin);
+  right: var(--margin);
+  z-index: 10;
+  mix-blend-mode: difference;
+  transition: transform 0.6s var(--ease-graceful), opacity 0.4s ease;
+}
+
+.site-nav.is-hidden {
+  transform: translateY(-14px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site-nav ul {
+  list-style: none;
+  text-align: right;
+}
+
+.site-nav li { line-height: var(--nav-rhythm); }
+
+/* Nav colors stay literal white: mix-blend-mode difference inverts them
+   over the light background (white -> black, 50% white -> mid grey),
+   matching Layout_Light. Themed tokens here would double-invert. */
+.site-nav a {
+  position: relative;
+  display: block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.3s ease;
+}
+
+/* Dot slot — hangs to the right so labels stay right-aligned */
+.site-nav a::after {
+  content: '';
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.site-nav a:hover { color: rgba(255, 255, 255, 0.7); }
+.site-nav a:hover::after { opacity: 0.5; }
+
+/* Text roll on hover (two stacked copies, clipped to one line).
+   Shared component: set --roll-h per context. */
+.roll {
+  display: block;
+  overflow: hidden;
+  height: var(--roll-h, 1.5em);
+}
+
+.roll > span {
+  display: block;
+  line-height: var(--roll-h, 1.5em);
+  transition: transform 0.55s var(--ease-graceful);
+}
+
+a:hover .roll > span,
+button:hover .roll > span,
+a:focus-visible .roll > span,
+button:focus-visible .roll > span {
+  transform: translateY(-100%);
+}
+
+.site-nav a { --roll-h: var(--nav-rhythm); }
+
+.site-nav a[aria-current='page'] { color: #ffffff; }
+.site-nav a[aria-current='page']::after { opacity: 1; }
+
+/* Archive sub-nav: [ Design / Logos ] to the left of the Archive link.
+   Revealed on hover/focus of the item, pinned open on the archive page
+   (li.is-current). The Archive link sits first in the DOM so tabbing
+   reveals the sub links before focus reaches them; row-reverse restores
+   the designed visual order. Colors stay literal white for the
+   mix-blend-mode difference trick, same as the rest of the nav. */
+.nav-archive {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 9px;
+}
+
+.nav-sub {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(8px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.55s var(--ease-graceful),
+    visibility 0s linear 0.3s;
+}
+
+.nav-archive:hover .nav-sub,
+.nav-archive:focus-within .nav-sub,
+.nav-archive.is-current .nav-sub {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.nav-sub a::after { content: none; } /* no dot slot on sub links */
+.nav-sub a.is-active { color: #ffffff; }
+
+/* During the load reveal, the pinned-open sub fades in with the dots */
+html.anim-intro:not(.nav-in) .site-nav .nav-sub { opacity: 0; }
+
+.site-nav a:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 4px;
+}
+
+/* Mobile menu chrome (reference/mobile-menu-default.png + -open.png).
+   The pill and backdrop are injected by main.js on every page; the
+   640px block below collapses the nav behind them. The pill's bg is
+   --menu-pill, a per-theme literal pre-inverted so the nav's
+   mix-blend-mode difference renders it as --surface exactly. */
+.menu-btn { display: none; }
+
+html.menu-lock { overflow: hidden; }
+
+/* Page-blur backdrop: only enters the render tree while the menu is up
+   (.is-mount) and only ever fades via opacity: a permanently mounted
+   backdrop-filter keeps the page on an expensive compositing path.
+   Blur + a 35% tint (--menu-scrim: black in dark, white in light). Closing waits (transition-delay) for the
+   links to roll back out first. */
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  display: none;
+  opacity: 0;
+  background: var(--menu-scrim);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  transition: opacity 0.5s var(--ease-graceful) 0.25s;
+}
+
+.menu-backdrop.is-mount { display: block; }
+.menu-backdrop.is-open { opacity: 1; transition-delay: 0s; }
+
+/* ---------------------------------------------------------------
+   Archive: infinite looping carousel (reference/archive-design.png)
+--------------------------------------------------------------- */
+
+/* Single-screen page: header top, carousel centered, footer pinned.
+   Only the HORIZONTAL Design view is a locked screen; the vertical view
+   and the Logos view scroll normally. The html-level lock stops the
+   window scrolling outright there (a couple of px of line-height
+   rounding otherwise let the page nudge). The layout lands on <html>
+   pre-paint from the inline head script, so nothing reflows on load. */
+html[data-layout='horizontal']:has(body[data-page='archive']:not([data-view='logos'])) {
+  overflow: hidden;
+}
+
+html[data-layout='horizontal'] body[data-page='archive']:not([data-view='logos']) {
+  position: relative; /* containing block for the absolutely placed .arc */
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+html[data-layout='horizontal'] body[data-page='archive']:not([data-view='logos']) .archive-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+html[data-layout='horizontal'] body[data-page='archive']:not([data-view='logos']) .site-footer {
+  margin-top: 0;
+}
+
+/* One view at a time. Logos replaces both Design layouts. */
+body[data-view='logos'] .arc,
+body[data-view='logos'] .varc,
+html[data-layout='vertical'] .arc,
+html[data-layout='horizontal'] .varc {
+  display: none;
+}
+
+/* Main image is 552px TALL at 1440 (440 wide back when every archive
+   image was 1195:1500; the mock's 336, enlarged twice on request).
+   The images have mixed aspect ratios now, so the band is keyed to
+   height and each image keeps its own width: main.js packs the constant
+   30px gaps from the real widths. The svh clamp keeps the image (and
+   the band) on screen when the viewport is short.
+   Absolutely positioned so the image centre sits exactly on the
+   viewport's vertical centre (the counter hangs below
+   and doesn't push the band up). */
+.arc {
+  --arc-main-h: min(38.333vw, 57.75svh);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50vh - var(--arc-main-h) / 2);
+  top: calc(50svh - var(--arc-main-h) / 2);
+}
+
+/* Load reveal: the items fade in and rise as a ripple from the centre
+   image outwards, sharing the home page's rise-in recipe. The animation
+   lives on .arc-tile, not .arc-item, because the item's own opacity and
+   transform belong to the carousel engine (fade-away values, slot
+   positions); the tile's fade multiplies against them, and its 24px
+   rise shrinks with the slot scale so side images ripple
+   proportionally. main.js sets --ripple per tile from its ring distance
+   to the centre. The counter fades in as the ripple reaches the outer
+   rings. */
+@keyframes arc-fade {
+  from { opacity: 0; }
+}
+
+/* Outer rings fade in more slowly: --ripple-dur grows with the ring
+   alongside the --ripple delay (both set per tile by main.js) */
+.anim-intro .arc-tile {
+  animation: rise-in var(--ripple-dur, 0.9s) var(--ease-graceful) calc(1.2s + var(--ripple, 0s)) backwards;
+}
+
+.anim-intro .arc-counter {
+  animation: arc-fade 0.6s var(--ease-graceful) 1.75s backwards;
+}
+
+.arc-band {
+  position: relative;
+  height: var(--arc-main-h);
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.arc-band:focus-visible {
+  outline: 1px solid var(--muted-strong);
+  outline-offset: 6px;
+}
+
+/* Directional cursors over the click zones: same circle + arrow language
+   as the home carousel buttons. Hotspot at the 40px circle's centre.
+   URIs live in the --cursor-* tokens on :root (theme-aware pair). */
+.arc-band.cur-left { cursor: var(--cursor-prev); }
+.arc-band.cur-right { cursor: var(--cursor-next); }
+
+/* Sized off the main slot HEIGHT; --ar is the image's own aspect ratio,
+   set per item by main.js, so the width follows the picture. The slot
+   scale rides on transform, so nothing re-lays-out while the band moves. */
+.arc-item {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: var(--arc-main-h);
+  aspect-ratio: var(--ar, 1);
+  will-change: transform, opacity;
+}
+
+.arc-tile {
+  width: 100%;
+  height: 100%;
+  background: var(--placeholder);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.arc-tile img,
+.arc-tile video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* 23px from the main image's bottom edge to the cap height, per the mock */
+.arc-counter {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--fg);
+}
+
+.arc-counter .arc-total { color: var(--muted); }
+
+/* ---------------------------------------------------------------
+   Archive layout switch (reference/archive-update/*-default,
+   -click, -hover): an ellipsis circle under the intro that reveals
+   the Vertical / Horizontal pills. Design view only.
+   Geometry from the mock at 1512: 36px circle, 36px pills on 8px
+   gaps, 17px pill padding, Otto 14px labels, a 16px check on the
+   active pill 8px ahead of its label.
+--------------------------------------------------------------- */
+
+.view-switch {
+  grid-column: 1 / 8;
+  margin-top: 43px; /* circle top at y141, under the 3-line intro */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+body[data-view='logos'] .layout-switch { display: none; }
+
+/* Same control, same slot, for the Logos grid: phones only (the 4-up
+   desktop grid has nothing to switch). Revealed in the 640px block. */
+.cols-switch { display: none; }
+
+.anim-intro .view-switch {
+  animation: rise-in 0.9s var(--ease-graceful) 1.4s backwards;
+}
+
+.vs-toggle {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--fg);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.35s var(--ease-graceful);
+}
+
+.vs-toggle svg { display: block; }
+
+.vs-toggle:hover,
+.view-switch.is-open .vs-toggle { background: var(--surface-hover); }
+
+.vs-toggle:active { transform: scale(0.94); }
+
+/* The pills stay out of the tab order while they are down: visibility
+   flips after the fade, the same pattern as the footer settings panel */
+.vs-opts {
+  display: flex;
+  gap: 8px;
+  visibility: hidden;
+  transition: visibility 0s linear 0.45s;
+}
+
+.view-switch.is-open .vs-opts {
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.vs-pill {
+  --roll-h: 20px; /* one-line clip at 14px Otto, clearing Single's g */
+  height: 36px;
+  padding: 0 17px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  font-family: var(--otto);
+  font-weight: var(--otto-weight);
+  letter-spacing: var(--otto-tracking);
+  font-synthesis: none;
+  font-size: 14px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition:
+    opacity 0.45s var(--ease-graceful),
+    transform 0.45s var(--ease-graceful),
+    background-color 0.3s ease;
+}
+
+.view-switch.is-open .vs-pill {
+  opacity: 1;
+  transform: none;
+}
+
+/* Out from behind the circle one after the other */
+.view-switch.is-open .vs-pill:last-child { transition-delay: 0.06s; }
+
+.vs-pill:hover { background: var(--surface-hover); }
+
+/* The check marks the live layout; display (not opacity) so the pill
+   tightens back up around the label when it is not the active one */
+.vs-check { display: none; }
+.vs-pill[aria-pressed='true'] .vs-check { display: block; }
+
+.vs-toggle:focus-visible,
+.vs-pill:focus-visible {
+  outline: 1px solid var(--muted-strong);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------
+   Archive vertical view (reference/archive-update/
+   archive-design-new-vertical-default.png): an editorial scroll of the
+   same 22 images on the 12-column grid. Each band is one grid row, so
+   images inside it can overlap vertically. Everything vertical is a
+   PERCENTAGE: --off (an image's drop inside its band) resolves against
+   its own grid area and --gap (the space above a band) against the
+   content width, so the composition scales with the columns exactly as
+   the aspect-driven image heights do. main.js builds the markup and
+   sets the custom properties from the same table the band above uses.
+--------------------------------------------------------------- */
+
+.varc {
+  padding: 0 var(--margin);
+  margin-top: 9.46%; /* 143px below the switch at 1512 */
+}
+
+.va-band {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
+}
+
+.va-band + .va-band { margin-top: var(--gap, 0); }
+
+/* --pull narrows an image inside its grid area and pins it to the
+   area's right edge (only 06 in the mock). The pin is a margin, not
+   justify-self: Chrome honours justify-self on block-level boxes too,
+   so it would follow the items into the mobile layout below and glue
+   every narrowed image to the right margin. */
+.va-item {
+  grid-column: var(--col) / span var(--span);
+  /* Every image in a band shares the one row: auto-placement would push
+     an image that starts on an earlier column than the one before it
+     (05 under 04, 15 under 16, 20 under 19) onto a row of its own and
+     the band would stack instead of overlap. */
+  grid-row: 1;
+  width: var(--pull, 100%);
+  padding-top: var(--off, 0);
+  margin: 0;
+}
+
+.va-pull { margin-left: auto; }
+
+/* Clipped, unlike the project slides' reason for it: the blur-up
+   placeholder paints a ::before preview blurred 12px and scaled 1.06,
+   and with nothing clipping it that oversized copy haloes every image
+   for good (the real photo only fades in over the top of it). */
+.va-tile {
+  position: relative;
+  aspect-ratio: var(--ar, 1);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.va-tile img,
+.va-tile video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Each image fades up 20px as it scrolls in, at every width (the blur
+   reveal this replaced is gone). main.js adds .va-rise, then .is-in to
+   release it, and drops both once the tile lands. The start state
+   carries NO transition (it would animate the tile down into hiding as
+   the class lands); the transition belongs to the release. --va-d is
+   only set on the images on screen at load. */
+.va-rise {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.va-rise.is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s ease var(--va-d, 0s),
+    transform 0.9s var(--ease-graceful) var(--va-d, 0s);
+}
+
+/* Logos view: 4-up grid of logo cards (reference/archive-logos.png).
+   Cards are 335x400 at 1440 (3 grid columns), marks centred at their
+   native 174x160 (52% of the card width). Unlike the Design view this
+   page scrolls normally, so the single-screen lock lifts here. */
+body[data-page='archive'][data-view='logos'] {
+  height: auto;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: visible;
+}
+
+/* Mock shows ~200px from the last card row to the footer at 1440 */
+body[data-page='archive'][data-view='logos'] .site-footer {
+  margin-top: clamp(120px, 13.9vw, 200px);
+}
+
+body[data-page='archive']:not([data-view='logos']) .logo-grid { display: none; }
+
+.logo-grid {
+  margin-top: clamp(120px, 14.5vw, 209px); /* grid top at y307 in the mock */
+  row-gap: 20px;
+}
+
+.logo-card {
+  grid-column: span 3;
+  aspect-ratio: 335 / 400;
+  background: var(--logo-card);
+  border-radius: var(--radius);
+  display: grid;
+  place-items: center;
+}
+
+/* Every logo ships on a uniform 500x500 frame with the optical sizing
+   baked in by Nick, so the frames all render at one size and the SVGs
+   are the sizing authority. 68% of the card width puts the average
+   mark at the mock's ~160px. */
+.logo-card img {
+  width: 68%;
+  height: auto;
+  pointer-events: none;
+}
+
+/* Every mark is a white-fill SVG; flip them for the light surface */
+:root[data-theme='light'] .logo-card img { filter: invert(1); }
+
+
+/* Big monitors (Studio Display etc.): 5-up keeps the cards from
+   ballooning; in the 4-up grid they would pass ~400px wide here */
+@media (min-width: 1680px) {
+  .logo-grid { grid-template-columns: repeat(5, 1fr); }
+  .logo-card { grid-column: auto; }
+}
+
+/* Load reveal: cards rise in one at a time with the same 2s soft-eased
+   80px entrance as the home page's first-project slides; --lg-d is the
+   per-card stagger set by main.js. Display toggling on a view switch
+   restarts the animation, matching the Design view. */
+.anim-intro .logo-card {
+  --rise: 80px;
+  animation: rise-in 2s var(--ease-soft) calc(1.2s + var(--lg-d, 0s)) backwards;
+}
+
+@media (max-width: 640px) {
+  /* Horizontal view on phones is the home page's carousel instead of
+     the infinite band: one image per screen, native scroll + snap,
+     pagination dots below (main.js skips the slot engine here). Back
+     into the flow too: centering on the viewport would run the band
+     into the intro, so it centers in the space below the header. */
+  .arc { position: static; }
+
+  /* The band takes whatever the header and footer leave rather than a
+     guessed svh, so the dots can never ride up into the footer on a
+     short phone (46px below is the dots' own height plus their gap).
+     88vw is the shared image height where it fits: the taller that is,
+     the more of the landscape images hit the width cap below and end up
+     SHORTER than it, which is the opposite of matching. At 88vw twelve
+     of the 22 land on exactly this height and only the wide ones cap;
+     much above it and the majority cap instead. */
+  html[data-layout='horizontal'] body:not([data-view='logos']) .arc {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .arc-band {
+    flex: none;
+    height: min(88vw, calc(100% - 46px));
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+    cursor: default;
+  }
+
+  .arc-band::-webkit-scrollbar { display: none; }
+
+  /* Snapping fights a scripted dot-tap glide frame by frame */
+  .arc-band.is-animating { scroll-snap-type: none; }
+
+  .arc-item {
+    position: static;
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    scroll-snap-align: center;
+    display: grid;
+    place-items: center;
+    will-change: auto;
+  }
+
+  /* Every image shares one height, so the only thing that varies from
+     slide to slide is the margin each one leaves either side. A wide
+     image that would otherwise run off the screen caps its width at the
+     16px margin and sits shorter instead: the min() below is that width
+     cap written as the height which produces it, so the aspect ratio is
+     never broken. */
+  .arc-tile {
+    width: auto;
+    height: min(100%, calc((100vw - 32px) / var(--ar)));
+    aspect-ratio: var(--ar);
+  }
+
+  /* Dots stand in for the NN/22 counter. There are 22 of them, so they
+     run smaller and tighter than the project carousels' 8px on 10px and
+     still fit inside the margins on a 320px screen. */
+  html[data-layout='horizontal'] .arc-counter { display: none; }
+
+  /* One dot per item and the set keeps growing, so the gap is derived
+     from the count (--dots-n, set by main.js) rather than re-tuned by
+     hand every time: it opens to the project carousels' 10px when there
+     are few, and closes to a 3px floor when there are many. The 60px is
+     the 20px page margins plus the pill's own 10px padding either side. */
+  .arc .carousel-dots {
+    --dots-n: 30;
+    width: max-content;
+    max-width: 100%;
+    margin: 24px auto 0;
+    gap: clamp(
+      3px,
+      calc((100vw - 60px - var(--dots-n) * 6px) / (var(--dots-n) - 1)),
+      10px
+    );
+  }
+
+  .arc .carousel-dots button { width: 6px; height: 6px; }
+
+  .arc .carousel-dots button::after { inset: -4px; }
+
+  /* Vertical view keeps a simplified stagger: wide images fill the
+     column, narrower ones (--mw, set per image by main.js) stay narrow
+     and alternate sides down the page. */
+  .varc { margin-top: 34px; }
+
+  .va-band { display: block; }
+  .va-band + .va-band { margin-top: 0; }
+
+  .va-item {
+    width: var(--mw, 100%);
+    padding-top: 0;
+    margin-top: 44px;
+    margin-left: 0;
+  }
+
+  .va-item.va-right { margin-left: auto; }
+
+  .va-band:first-child > .va-item:first-child { margin-top: 0; }
+
+  /* The switches run the full width here so the pills have room */
+  .view-switch { grid-column: 1 / -1; }
+
+  /* Logos grid drops to 2-up, with the column switch above it (in the
+     header, so the 34px to the first card is 20px of header padding
+     plus this margin) */
+  .logo-card { grid-column: span 6; }
+  .logo-grid { margin-top: 14px; }
+
+  body[data-page='archive'][data-view='logos'] .cols-switch { display: flex; }
+
+  body[data-page='archive'][data-view='logos'][data-cols='one'] .logo-card {
+    grid-column: 1 / -1;
+  }
+
+  /* Single Column + Two Column are long enough that below ~342px the
+     open pills would run off the right margin (the layout switch's
+     shorter labels clear it). Tighten this one's padding and gaps
+     there rather than shrinking the 14px labels; 375 and up keep the
+     designed 17px/8px geometry. */
+  @media (max-width: 360px) {
+    .cols-switch { gap: 6px; }
+    .cols-switch .vs-opts { gap: 6px; }
+    .cols-switch .vs-pill { padding: 0 12px; gap: 6px; }
+  }
+
+}
+
+/* ---------------------------------------------------------------
+   Info page (reference/archive-design-update.png)
+--------------------------------------------------------------- */
+
+html { scroll-behavior: smooth; }
+
+/* Single screen: intro at the top, the photo + accordion band pinned
+   just above the fold. min-height (not height) so short viewports push
+   content below the fold instead of squashing it. */
+.info-hero {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* The info intro is set wider than the home one so the copy holds the
+   reference's 5-line shape */
+body[data-page='info'] .intro { max-width: 560px; }
+
+/* The band: photo cols 1-3, accordion columns 5-8 and 9-12, top-aligned
+   with each other; the row height comes from the photo, and the column
+   holding the open item stretches to meet its bottom edge */
+.info-band {
+  position: relative; /* containing block for the open item's panel card */
+  margin-top: auto;
+  padding-top: 50px; /* breathing room from the intro on short screens */
+  /* Clears the fixed office pill's zone, and matches the open office
+     window's bottom: 71px (pill bottom 20 + pill 33 + 18 gap), so on
+     big screens, where the window is capped at --acc-stack-h, it lines
+     up exactly with the accordion's top and bottom rules. Change both
+     together. */
+  margin-bottom: 71px;
+  align-items: stretch;
+}
+
+/* Office camera (reference/info-update mocks): a page-centred pill fixed
+   to the bottom edge; clicking it opens the live window above it and the
+   label flips to Close. Centred with auto margins, not a transform, so
+   the rise-in keyframe's transform doesn't fight it. */
+/* Wrapper for the pill + window. It only exists for phones, where the
+   pair leaves the fixed layer and sits in the flow under the photo; on
+   desktop it dissolves and both children stay fixed to the viewport. */
+.office-dock { display: contents; }
+
+.office-btn {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  margin-inline: auto;
+  width: fit-content;
+  z-index: 30;
+  height: 33px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  font-family: var(--otto);
+  font-weight: var(--otto-weight);
+  letter-spacing: var(--otto-tracking);
+  font-synthesis: none;
+  font-size: 16px;
+  cursor: pointer;
+  --roll-h: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Icon rolls (office pill's home, Say Hi's wave: svgs inlined with
+   stroke: currentColor so they follow their button's color). Each is
+   its OWN .roll holding two stacked svg copies, so it rolls in step
+   with the label on hover; flex centres the svg inside the clip,
+   where the shared rule's line-height only places text. */
+.icon-roll { flex-shrink: 0; }
+
+.icon-roll > span {
+  display: flex;
+  align-items: center;
+  height: var(--roll-h);
+}
+
+/* The Close state drops the home icon */
+.office-btn[aria-expanded='true'] .icon-roll { display: none; }
+
+/* The window: cols 5-8 at 3:2 (453x302 at 1440), page-centred 18px above
+   the pill, clamped so short viewports never push it off the top, and
+   never taller than the accordion stack (--acc-stack-h) on big screens
+   (per Nick 2026-10-14). It
+   fades + rises in (the pill stays put, so the old morph is gone). */
+.office-cam {
+  --office-open-h: min(
+    calc((100vw - 260px) / 4.5 + 40px),
+    calc(100svh - 140px),
+    var(--acc-stack-h)
+  );
+  --office-open-w: calc(var(--office-open-h) * 1.5);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 71px; /* pill bottom 20 + pill 33 + 18 gap */
+  margin-inline: auto;
+  z-index: 29;
+  width: var(--office-open-w);
+  height: var(--office-open-h);
+  border-radius: 12px; /* between the 6px image surfaces and the old 16px */
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.6s var(--ease-soft),
+    visibility 0s linear 0.6s;
+}
+
+.office-cam.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.45s ease,
+    transform 0.6s var(--ease-soft),
+    visibility 0s;
+}
+
+.office-cam-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--placeholder);
+}
+
+/* Dark scrim between the footage and the overlay text so the white
+   chrome pops against bright frames */
+.office-cam-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* The offline stills are darker by nature, so the white chrome reads
+   without the scrim's help */
+.office-cam.is-offline .office-cam-scrim { background: none; }
+
+/* Top-left chrome stack: the clock with the location/weather rotator
+   under it. In flow inside one absolute container, so the rotator
+   always clears the clock even when the bracketed check-back note
+   wraps it to two lines on narrow windows. */
+.office-cam-chrome {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: block;
+}
+
+/* Overlay chrome rides in once the window has arrived */
+.office-cam-status {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.office-cam.is-open .office-cam-status {
+  opacity: 1;
+  transition-delay: 0.3s;
+}
+
+/* The after-hours check-back note rides the clock's brackets per Nick
+   (2026-10-15): "(OFFLINE - CHECK BACK SOON/TOMORROW)", built in
+   main.js. The old corner .office-cam-after element is gone. */
+
+/* "Say Hi": plays the one-shot wave clip layered over the looping
+   feed; the loop keeps running underneath so the hand-back is
+   seamless. One wave per visit, then the button raises the
+   do-not-disturb note instead (main.js). Hidden while "offline": you
+   can't wave at an empty office, and it frees the top-right corner
+   for the Check Back note. */
+.office-cam-wave {
+  background: transparent; /* no placeholder grey while hidden */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Outside office hours the window shows a still of the empty desk
+   instead of the "live" loop (offline-am.jpg stands in for both the
+   morning and evening states until the evening frame lands; main.js
+   keeps the loop paused underneath while it shows) */
+.office-cam-offline { display: none; }
+
+.office-cam.is-offline .office-cam-offline { display: block; }
+
+/* Per-clip: there are two replies now (wave, then peace sign) and only
+   the one actually playing may show */
+.office-cam-wave.is-playing { opacity: 1; }
+
+.office-cam-hi {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  /* Solid white circle on the footage, both themes: the wave icon
+     alone (rolling on hover), the label demoted to a delayed tooltip */
+  background: #ffffff;
+  color: #000000;
+  --roll-h: 20px; /* icon roll clip */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s ease, background-color 0.3s ease 0s;
+}
+
+/* "Say hi" tooltip under the circle, right-aligned to it: fades in
+   only once the pointer has rested on the button a beat (the delay
+   lives on the hover state, so leaving hides it immediately).
+   Keyboard focus shows it straight away. */
+.office-cam-hi-tip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #ffffff;
+  font-family: 'FT Polar Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.office-cam-hi:hover .office-cam-hi-tip {
+  opacity: 1;
+  transition-delay: 1.2s;
+}
+
+.office-cam-hi:focus-visible .office-cam-hi-tip { opacity: 1; }
+
+.office-cam.is-open .office-cam-hi {
+  opacity: 1;
+  transition-delay: 0.3s, 0s;
+}
+
+/* No hover fill: the #ECECEC from the pill era read as a grey halo
+   around the hand at this size. The icon roll and the tooltip are the
+   hover feedback. */
+
+.office-cam.is-offline .office-cam-hi { display: none; }
+
+/* Do-not-disturb note: a full-width bar inset 8px from the frame that
+   slides up from below the bottom edge (the window's overflow:hidden
+   clips it when down) and slides back down when the timer dismisses
+   it. The travel is its own height + the 8px inset, plus a little
+   slack for subpixel rounding. */
+.office-cam-dnd {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #ffffff;
+  font-family: 'FT Polar Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 1.5;
+  text-transform: uppercase;
+  text-align: center;
+  pointer-events: none;
+  transform: translateY(calc(100% + 10px));
+  transition: transform 0.5s var(--ease-graceful);
+}
+
+.office-cam.is-dnd .office-cam-dnd { transform: translateY(0); }
+
+/* Clock: literal white + mono; it sits on the image in both themes.
+   The bracketed check-back note can wrap it to two lines on narrow
+   windows, so the line has breathing room (1.4), a right inset to
+   wrap inside, and the dot pins to the FIRST line (flex-start + the
+   margin that centres an 8px dot on a 16.8px line box) rather than
+   floating between the two. */
+.office-cam-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  color: #ffffff;
+  font-family: 'FT Polar Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+/* Green dot = online (9-5 Pacific, set by main.js), grey otherwise */
+/* Offline reads as a stroked white dot (the old grey fill vanished
+   into the footage); online fills it --live green, border and all */
+.office-cam-status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  margin-top: 4px; /* centres the dot on the first line box */
+  flex-shrink: 0; /* a long wrapped clock line must not squeeze the dot */
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid #ffffff;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.office-cam-status.is-online::before {
+  background: var(--live);
+  border-color: var(--live);
+}
+
+/* Meta line under the clock (reference/office-view-updates.png):
+   location and weather share the slot, rolling between each other every
+   5s while the window is open (main.js). The clipped column holds
+   location / weather / location again, so the roll always travels
+   upward and the loop's reset jump is invisible. Weather only joins the
+   rotation once real data lands, so a failed fetch just leaves the
+   location holding the line. */
+.office-cam-meta {
+  display: block;
+  /* 11px under the clock's line box; -5px lines the pin/weather icons
+     up with the clock dot (they carry their own inset) */
+  margin: 11px 0 0 -5px;
+  height: 18px;
+  overflow: hidden;
+  color: #ffffff;
+  font-family: 'FT Polar Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: uppercase; /* matches the window's other chrome */
+  line-height: 1;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.office-cam.is-open .office-cam-meta {
+  opacity: 1;
+  transition-delay: 0.3s;
+}
+
+.office-cam-meta-roll {
+  display: block; /* spans ignore transforms while inline */
+  transition: transform 0.55s var(--ease-graceful);
+}
+
+.office-cam-slide {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 18px;
+  white-space: nowrap;
+}
+
+.office-cam-wicon {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+}
+
+.office-cam-wicon svg { display: block; }
+
+.office-btn:focus-visible {
+  outline: 1px solid var(--muted-strong);
+  outline-offset: 3px;
+}
+
+/* Headshot: ends on col 12 (335x400 at 1440, half its natural size),
+   pinned to the band's top so it sits flush with the accordion's first
+   rule and the open panel's top edge. It is capped at the accordion
+   stack's height (--acc-stack-h) so the band never grows taller than
+   the stack: on big screens (Studio Display) the photo used to set the
+   row height, which floated the accordion up into the middle of the
+   screen (per Nick 2026-10-14). Below ~1400px the cols 10-12 width is
+   the tighter cap, as before. Hover: main.js lays a WebGL canvas
+   (.info-photo-fx) over it that shows only while the cursor's scatter
+   effect is running; at rest the plain img is what you see. */
+.info-photo {
+  grid-column: 10 / 13;
+  align-self: start;
+  justify-self: end; /* right edge holds the page margin */
+  width: min(100%, var(--acc-stack-h) * 670 / 800);
+  position: relative;
+}
+
+.info-photo-fx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.info-photo.is-fx .info-photo-fx { opacity: 1; }
+
+.info-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  background: var(--placeholder);
+}
+
+/* Accordion (reference/info-update mocks): one column on cols 1-4,
+   80px rows with a 1px rule above each item plus a closing rule. One
+   item open at a time (main.js); its content appears in a card panel
+   over cols 5-9 rather than expanding the row. */
+/* --acc-stack-h: five 80px rows, each under a 1px rule, plus the
+   closing rule. Re-derive it if the row padding or count changes.
+   Page-level so the office window (outside the band) can read it. */
+body[data-page='info'] { --acc-stack-h: 406px; }
+
+.acc-col {
+  grid-column: 1 / 5;
+  display: flex;
+  flex-direction: column;
+}
+
+.acc-col::after {
+  content: '';
+  border-top: 1px solid var(--acc-rule);
+}
+
+.acc-item {
+  border-top: 1px solid var(--acc-rule);
+}
+
+.acc-head { margin: 0; }
+
+.acc-head button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 27px 24px 27px 22px; /* 80px rows, content inset from the rules */
+  background: none;
+  border: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  font-weight: var(--sans-weight); /* the h2 wrapper would otherwise bold it */
+  color: var(--fg);
+  text-align: left;
+  cursor: pointer;
+}
+
+.acc-head button:focus-visible {
+  outline: 1px solid var(--muted-strong);
+  outline-offset: -4px;
+}
+
+/* Labels carry the project titles' typography: ABC Otto at 22px on the
+   theme's weight/tracking pair. Scoped to .acc-title rather than the
+   button so the plus sign keeps its geometry. */
+.acc-title {
+  --roll-h: 26px; /* one-line clip, leaves room for the 22px descenders */
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--otto);
+  font-weight: var(--otto-weight);
+  font-size: 22px;
+  letter-spacing: var(--otto-tracking);
+  font-synthesis: none;
+}
+
+/* Roman at rest, italic on the roll, same trick as the contact links:
+   the second (aria-hidden) copy carries the italic cut. The open item
+   pins the roll at the italic. */
+.acc-title .roll > span:last-child {
+  font-style: italic;
+}
+
+.acc-item.is-open .acc-title .roll > span {
+  transform: translateY(-100%);
+}
+
+/* Plus that morphs to minus, the home project accordion's sign */
+.acc-sign {
+  position: relative;
+  width: 12px;
+  height: 12px;
+}
+
+.acc-sign::before,
+.acc-sign::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+}
+
+.acc-sign::before {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+  margin-top: -0.75px;
+}
+
+.acc-sign::after {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1.5px;
+  margin-left: -0.75px;
+  transition: transform 0.35s var(--ease-graceful), opacity 0.35s var(--ease-graceful);
+}
+
+.acc-item.is-open .acc-sign::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+/* While one item is open the others fade back; the separators (item
+   borders) never change state */
+.acc-head .roll,
+.acc-sign {
+  transition: opacity 0.35s var(--ease-graceful);
+}
+
+.acc-col.has-open .acc-item:not(.is-open) .acc-head .roll,
+.acc-col.has-open .acc-item:not(.is-open) .acc-sign {
+  opacity: 0.4;
+}
+
+/* The open item's panel: a card over cols 5-9, aligned to the band's
+   top, fading + rising in with no layout shift (the home project
+   accordion's panel manners). Absolute against .info-band, placed with
+   the grid's own math. */
+.acc-body {
+  position: absolute;
+  top: 50px; /* the band's padding-top: level with the accordion's top rule */
+  left: calc((100vw - 260px) / 3 + 100px); /* col 5 */
+  /* cols 5-9, but never wider than the 460px text measure plus the
+     36px padding each side, so the right side's air matches the left's
+     on big screens instead of opening into a wide empty gap */
+  width: min(calc((100vw - 260px) * 5 / 12 + 80px), 532px);
+  /* Never taller than the accordion stack beside it; longer content
+     (Principles) scrolls inside the card instead, on a slim bar */
+  max-height: calc(100% - 50px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--acc-card);
+  border-radius: var(--radius);
+  padding: 36px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition:
+    opacity 0.6s var(--ease-soft),
+    transform 0.6s var(--ease-soft),
+    visibility 0s linear 0.6s;
+}
+
+.acc-item.is-open .acc-body {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.6s var(--ease-soft),
+    transform 0.6s var(--ease-soft),
+    visibility 0s;
+}
+
+.acc-body-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* The card's slim scrollbar: a 4px thumb in the faint grey, inset 4px
+   from the card's edges all around (the transparent thumb border makes
+   the side gutters, the track margin the top/bottom ones). Chrome and
+   Safari take the pseudo-elements; Firefox (gated so Chrome keeps the
+   pseudos, which the standard properties would disable) gets its thin
+   native equivalent. */
+.acc-body::-webkit-scrollbar { width: 22px; }
+
+.acc-body::-webkit-scrollbar-thumb {
+  background: var(--faint);
+  background-clip: padding-box;
+  border: 8px solid transparent;
+  border-radius: 11px;
+}
+
+.acc-body::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 8px 0;
+}
+
+@supports (-moz-appearance: none) {
+  .acc-body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--faint) transparent;
+  }
+}
+
+/* Panel type: Otto lede over sans detail text, like the mocks */
+.acc-body h3 {
+  font-family: var(--otto);
+  font-weight: var(--otto-weight);
+  letter-spacing: var(--otto-tracking);
+  font-synthesis: none;
+  font-size: 20px; /* 22 until Nick dropped it 2026-10-15 */
+  line-height: 1.3;
+  color: var(--fg);
+  max-width: 460px;
+  /* Keeps these leads off a one-word last line without gluing words in
+     the copy (Background's "possible." was landing alone). pretty only
+     nudges the break that causes the orphan, where balance would even
+     every line and restructure the rag. Progressive: where it is not
+     supported the text just wraps normally. */
+  text-wrap: pretty;
+}
+
+.acc-body p {
+  margin-top: 24px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--acc-body);
+  max-width: 460px;
+}
+
+/* Inline links in panel copy (Sebastian / Shawn): underlined in the
+   text colour, rolling on hover. The roll goes inline-block with its
+   clip matched to the paragraph's line (1.45em) and top-aligned, so
+   the name sits on the same baseline as the sentence around it. */
+.acc-link .roll {
+  --roll-h: 1.45em;
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* The underline lives on the roll copies (an inline-block swallows the
+   link's own text-decoration), so it rides along with the roll */
+.acc-link .roll > span {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Fact pills under the Currently copy: the archive switch pills' look
+   (36px tall, 17px pads, --surface) on static chips, no check and no
+   interaction. Otto 12px per Nick 2026-10-15 (14px, matching the switch
+   pills, until then). */
+.acc-pills {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.acc-pill {
+  height: 36px;
+  padding: 0 17px;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  font-family: var(--otto);
+  font-weight: var(--otto-weight);
+  letter-spacing: var(--otto-tracking);
+  font-synthesis: none;
+  font-size: 12px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* Stacked sections inside one card (Principles): every title takes the
+   lede treatment, with air above each group after the first and the
+   body pulled tighter under its own title than the panel default */
+.acc-body p + h3 { margin-top: 40px; }
+
+#acc-panel-principles h3 + p { margin-top: 12px; }
+
+/* Role / service lists (Experience, Services): body colour on an open
+   rhythm so the lines scan */
+.acc-body ul {
+  margin-top: 24px;
+  list-style: none;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--acc-body);
+  max-width: 460px;
+}
+
+/* Load reveal, in reading order: intro sweep, then the accordion rows
+   one at a time, the photo rising like the home slides, and the office
+   pill last */
+.anim-intro .acc-item:nth-child(1) {
+  animation: rise-in 0.9s var(--ease-graceful) 1.9s backwards;
+}
+
+.anim-intro .acc-item:nth-child(2) {
+  animation: rise-in 0.9s var(--ease-graceful) 2.03s backwards;
+}
+
+.anim-intro .acc-item:nth-child(3) {
+  animation: rise-in 0.9s var(--ease-graceful) 2.16s backwards;
+}
+
+.anim-intro .acc-item:nth-child(4) {
+  animation: rise-in 0.9s var(--ease-graceful) 2.29s backwards;
+}
+
+.anim-intro .acc-item:nth-child(5),
+.anim-intro .acc-col::after {
+  animation: rise-in 0.9s var(--ease-graceful) 2.42s backwards;
+}
+
+.anim-intro .info-photo {
+  --rise: 80px;
+  animation: rise-in 2s var(--ease-soft) 2.3s backwards;
+}
+
+/* The headshot arrives out of focus and sharpens once the page has
+   settled (reference/info-update/info-design-update-on-load-blur.png):
+   blurred through the first 3s, then a slow 4s pull to focus. The blur
+   bleeds past the frame unclipped, as in the mock. */
+@keyframes photo-focus {
+  from { filter: blur(20px); }
+  to { filter: blur(0); }
+}
+
+.anim-intro .info-photo img {
+  animation: photo-focus 4s var(--ease-graceful) 3s backwards;
+}
+
+.anim-intro .office-btn {
+  animation: rise-in 0.9s var(--ease-graceful) 2.8s backwards;
+}
+
+/* The footer sits just below the fold; keep the gap tight for anyone
+   who scrolls. 40px + the band's 20px bottom margin = 60px of air. */
+body[data-page='info'] .site-footer { margin-top: 40px; }
+
+/* ---------------------------------------------------------------
+   Contact page (reference/contact.png)
+--------------------------------------------------------------- */
+
+/* Single-screen page like the archive: header top, footer pinned to the
+   bottom, the contact block absolutely placed against the viewport so
+   the label row sits at the reference's 40% mark regardless of how the
+   intro wraps. */
+body[data-page='contact'] {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+body[data-page='contact'] .site-footer { margin-top: auto; }
+
+/* Set a touch wider than the home intro so the copy holds the
+   reference's 5-line rag (reference/contact.png) */
+body[data-page='contact'] .intro { max-width: 490px; }
+
+.contact-main {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 39.5vh;
+  top: 39.5svh;
+}
+
+.contact-email-col { grid-column: 1 / 7; }
+.contact-connect-col { grid-column: 7 / 13; }
+
+.contact-label {
+  font-size: 16px;
+  font-weight: var(--sans-weight);
+  line-height: 1;
+  color: var(--label);
+}
+
+/* Big links: 44px on a 73px rhythm (reference/contact.png). The roll
+   clip height leaves room for descenders inside the hover roll. */
+.contact-link {
+  --roll-h: 50px;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--otto);
+  font-weight: var(--otto-weight);
+  font-size: 44px;
+  line-height: 50px;
+  letter-spacing: var(--otto-tracking);
+  font-synthesis: none;
+}
+
+/* Roman at rest, italic on the roll: the second (aria-hidden) copy in
+   every contact link's .roll carries the italic cut, so the existing
+   hover roll doubles as the style change. Otto's italic is the narrower
+   of the two, so the roll box keeps sizing to the roman and the arrow
+   stays anchored through the swap. No width compensation needed. */
+.contact-link .roll > span:last-child {
+  font-style: italic;
+}
+
+.email-row {
+  margin-top: 42px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.connect-list {
+  margin-top: 42px;
+  list-style: none;
+}
+
+.connect-list li + li { margin-top: 23px; }
+
+/* Copy Email pill: hidden until the email row is hovered (or focused),
+   so it stays reachable while the pointer travels from the address to
+   the button itself. */
+.copy-email-btn {
+  --roll-h: 22px;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 16px;
+  letter-spacing: inherit;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.55s var(--ease-graceful),
+    margin-left 0.55s var(--ease-graceful);
+}
+
+/* The pill's reveal is keyed to the whole row, so the address's roll has
+   to be too. Keyed to the link alone, walking from the address onto the
+   pill would unhover the link: the text would roll back to the WIDER
+   roman while the pill stayed pulled in by the trim below, and the two
+   would overlap. Hovering (or focusing) anywhere in the row now holds
+   the italic, so the address and the pill enter and leave together. */
+.email-row:hover .contact-email-link .roll > span,
+.email-row:focus-within .contact-email-link .roll > span {
+  transform: translateY(-100%);
+}
+
+/* The address rolls to the italic on hover, and Otto's italic is ~31px
+   (light) to ~39px (dark) narrower than the roman at 44px. The link box
+   still sizes to the roman copy, so the flex gap would visibly open up
+   under the pill. --email-italic-trim is that measured slack, set per
+   theme by main.js; the pill slides it closed on the roll's own curve so
+   the 24px gap reads the same roman or italic. */
+.email-row:hover .copy-email-btn,
+.email-row:focus-within .copy-email-btn {
+  opacity: 1;
+  transform: none;
+  margin-left: calc(-1 * var(--email-italic-trim, 0px));
+}
+
+/* Checkmark ahead of the "Copied to clipboard" label: collapsed to
+   nothing at rest so the resting pill reads plain "Copy Email", it
+   unfolds and scales in with the copied state (.is-copied on the pill). */
+.copy-email-btn .copy-check {
+  flex: none;
+  width: 0;
+  opacity: 0;
+  transform: scale(0.4);
+  transition:
+    opacity 0.3s ease,
+    transform 0.55s var(--ease-graceful),
+    width 0.3s var(--ease-graceful),
+    margin 0.3s var(--ease-graceful);
+}
+
+.copy-email-btn.is-copied .copy-check {
+  width: 13px;
+  margin-right: 9px;
+  opacity: 1;
+  transform: none;
+}
+
+/* After the copied confirmation has had its moment, the pill fades away
+   on its own; this also beats the hover/focus pins above. main.js clears
+   the class once the pointer leaves the row, re-arming the hover. */
+.email-row.is-dismissed .copy-email-btn {
+  opacity: 0;
+  transform: translateX(-6px);
+  pointer-events: none;
+}
+
+/* Connect arrows: ride inside the link so the roll and the arrow share
+   one hover, fading in up-and-right on hover per the reference. */
+.contact-link svg {
+  display: block;
+  margin-left: 20px;
+  opacity: 0;
+  transform: translate(-6px, 6px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.55s var(--ease-graceful);
+}
+
+.contact-link:hover svg,
+.contact-link:focus-visible svg {
+  opacity: 1;
+  transform: none;
+}
+
+.contact-link:focus-visible,
+.copy-email-btn:focus-visible {
+  outline: 1px solid var(--muted-strong);
+  outline-offset: 4px;
+}
+
+/* Load reveal: after the intro sweep, the email column rises in first,
+   then the Connect label, then each Connect link on its own beat
+   (the info fold's 0.13s stagger). */
+.anim-intro .contact-email-col {
+  animation: rise-in 0.9s var(--ease-graceful) 1.9s backwards;
+}
+
+.anim-intro .contact-connect-col .contact-label {
+  animation: rise-in 0.9s var(--ease-graceful) 2.03s backwards;
+}
+
+.anim-intro .connect-list li {
+  animation: rise-in 0.9s var(--ease-graceful) backwards;
+}
+
+.anim-intro .connect-list li:nth-child(1) { animation-delay: 2.16s; }
+.anim-intro .connect-list li:nth-child(2) { animation-delay: 2.29s; }
+.anim-intro .connect-list li:nth-child(3) { animation-delay: 2.42s; }
+
+/* ---------------------------------------------------------------
+   Project sections
+--------------------------------------------------------------- */
+
+.project {
+  margin-top: clamp(100px, 12vw, 165px);
+}
+
+.project:first-of-type {
+  margin-top: clamp(120px, 17.5vw, 253px);
+}
+
+/* Header columns key off the carousel geometry (work-accordion refs):
+   accordion under col 1 (slide 1), open panel content in col 2 above
+   slide 2, arrows at the right. grid-12's padding still applies. */
+.project-header {
+  grid-template-columns: var(--slide-w) var(--slide-w) 1fr;
+}
+
+.project-title {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  font-family: var(--otto);
+  font-size: 22px;
+  font-weight: var(--otto-weight);
+  line-height: 1.2;
+  letter-spacing: var(--otto-tracking);
+  font-synthesis: none;
+}
+
+/* Tagline is the italic cut of the same weight, so it only flips style.
+   The whole gap is this 10px margin: there is deliberately NO word space
+   before the span in the markup, because a space is a glyph and Otto
+   Light's is ~0.4px wider than Regular's, which made the gap drift
+   between themes. A .sr-only ", " sits in its place instead, so the
+   heading still announces "Virro, Where waste is never wasted." rather
+   than running the words together (these h2s are the aria-labelledby
+   target for each project section). It is absolutely positioned, so it
+   costs no width. The tagline is inline here so it sits on the title's
+   line; on phones the h2 becomes a wrapping flex row (see the 640px
+   block) so a tagline that will not fit drops whole to its own line. */
+.project-title .tagline {
+  color: var(--muted);
+  margin-left: 10px;
+  font-style: italic;
+}
+
+/* Project accordion: Project Info / Credits rows. The open panel fills
+   the second column; the inactive row fades; plus morphs to minus. */
+.project-acc {
+  grid-column: 1;
+  grid-row: 2;
+  margin-top: 20px;
+}
+
+.project-acc-item {
+  --roll-h: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--acc-rule);
+  color: var(--acc-label);
+  font: inherit;
+  font-size: 14px;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+
+.project-acc .project-acc-item:last-child { border-bottom: 1px solid var(--acc-rule); }
+
+/* The row not currently open fades back while one is active. Only the
+   label and sign fade; the separator lines (button borders) never
+   change state. */
+.project-acc-item .roll,
+.project-acc-item .project-acc-sign {
+  transition: opacity 0.35s var(--ease-graceful);
+}
+
+.project-header[data-open] .project-acc-item[aria-expanded='false'] .roll,
+.project-header[data-open] .project-acc-item[aria-expanded='false'] .project-acc-sign {
+  opacity: 0.4;
+}
+
+.project-acc-item:focus-visible {
+  outline: 1px solid var(--muted-strong);
+  outline-offset: -4px;
+}
+
+/* Plus that morphs to minus: the vertical bar folds into the horizontal */
+.project-acc-sign {
+  position: relative;
+  width: 12px;
+  height: 12px;
+}
+
+.project-acc-sign::before,
+.project-acc-sign::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+}
+
+.project-acc-sign::before {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+  margin-top: -0.75px;
+}
+
+.project-acc-sign::after {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1.5px;
+  margin-left: -0.75px;
+  transition: transform 0.35s var(--ease-graceful), opacity 0.35s var(--ease-graceful);
+}
+
+.project-acc-item[aria-expanded='true'] .project-acc-sign::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+/* Panels crossfade in place above slide 2; absolute so nothing shifts */
+.project-acc-content {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  margin-top: 20px;
+}
+
+.project-acc-panel {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  padding-right: 20px;
+  /* Long copy scrolls inside the band above slide 2 (131px available at
+     every desktop width) instead of pushing into the carousel. The thin
+     scrollbar is styled to stay VISIBLE when there is overflow: macOS
+     overlay scrollbars auto-hide, and the bar is the scroll affordance. */
+  max-height: 112px;
+  overflow-y: auto;
+  opacity: 0;
+  transform: translateY(8px);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.6s var(--ease-soft),
+    transform 0.6s var(--ease-soft),
+    visibility 0s linear 0.6s;
+}
+
+.project-header[data-open='info'] .project-acc-panel-info,
+.project-header[data-open='credits'] .project-acc-panel-credits {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity 0.6s var(--ease-soft),
+    transform 0.6s var(--ease-soft);
+}
+
+/* The custom WebKit scrollbar is the primary styling: it is what makes
+   the bar PERSISTENT (macOS overlay bars auto-hide, and the standard
+   scrollbar-width/color properties style the overlay without pinning
+   it, silently suppressing these rules if both are declared). The
+   track margin insets the bar from the box's ends so it reads shorter. */
+.project-acc-panel::-webkit-scrollbar { width: 3px; }
+.project-acc-panel::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 4px 0;
+}
+.project-acc-panel::-webkit-scrollbar-thumb {
+  background: var(--acc-scroll);
+  border-radius: 1.5px;
+}
+
+/* Firefox has no ::-webkit-scrollbar; give it the standard properties
+   it does understand (its thin bar is persistent on most setups) */
+@supports not selector(::-webkit-scrollbar) {
+  .project-acc-panel {
+    scrollbar-width: thin;
+    scrollbar-color: var(--acc-scroll) transparent;
+  }
+}
+
+.project-acc-panel p {
+  font-size: 14px;
+  line-height: 1.36;
+  color: var(--acc-body);
+}
+
+.project-acc-panel ul { list-style: none; }
+
+.project-acc-panel li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--acc-body);
+}
+
+.project-acc-panel .credit-label { color: var(--muted); }
+
+/* Arrows */
+
+.carousel-arrows {
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: end;
+  align-self: end;
+  display: flex;
+  gap: 6px;
+}
+
+/* Pagination dots (injected by main.js): phones only, where swiping
+   replaces the arrows */
+.carousel-dots { display: none; }
+
+.arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--surface);
+  color: var(--fg);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.35s ease, transform 0.35s var(--ease-graceful);
+}
+
+.arrow svg { display: block; }
+
+.arrow:hover { transform: scale(1.06); }
+.arrow:active { transform: scale(0.96); }
+
+.arrow[disabled] {
+  opacity: 0.3;
+  cursor: default;
+  transform: none;
+}
+
+.arrow:focus-visible {
+  outline: 1px solid var(--muted-strong);
+  outline-offset: 3px;
+}
+
+/* Carousel */
+
+.carousel {
+  margin-top: 44px;
+  display: flex;
+  gap: var(--gap);
+  padding-left: var(--margin);
+  padding-right: var(--margin);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--margin);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+}
+
+.carousel::-webkit-scrollbar { display: none; }
+
+.carousel.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+
+.carousel.is-animating { scroll-snap-type: none; }
+
+.slide {
+  position: relative;
+  flex: 0 0 var(--slide-w);
+  width: var(--slide-w);
+  aspect-ratio: 1 / 1;
+  background: var(--placeholder);
+  border-radius: var(--radius);
+  scroll-snap-align: start;
+  overflow: hidden;
+  user-select: none;
+}
+
+.slide img,
+.slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------
+   Blur-up placeholders: main.js sets --ph (a tiny base64 preview from
+   js/placeholders.json, generated by tools/generate-placeholders.*)
+   on a lazy image's container and adds .ph. The blurred preview shows
+   in a ::before layer (scaled up to hide its soft edges) and the real
+   image fades in over it once loaded. Containers already carry a fixed
+   aspect (slides/tiles/avatars), so nothing shifts when images land.
+--------------------------------------------------------------- */
+
+.ph { position: relative; }
+
+.ph::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ph) center / cover no-repeat;
+  filter: blur(12px);
+  transform: scale(1.06);
+}
+
+.ph > img {
+  position: relative; /* paints above the ::before preview layer */
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.ph.ph-loaded > img { opacity: 1; }
+
+/* ---------------------------------------------------------------
+   Lightbox: focused image view (per reference/carousel-hover-icon.png
+   and carousel-lightbox.png). The loupe buttons are injected by
+   main.js into slides that hold an image. Desktop only: the block at
+   the end of this section switches it off for tablets and phones.
+--------------------------------------------------------------- */
+
+/* Slides (and archive tiles) that hold an image are fully clickable */
+.slide:has(.slide-zoom),
+.va-tile { cursor: pointer; }
+
+/* Loupe reveal on slide hover */
+.slide-zoom {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity 0.5s var(--ease-soft),
+    transform 0.5s var(--ease-soft);
+}
+
+.slide:hover .slide-zoom,
+.va-tile:hover .slide-zoom,
+.slide-zoom:focus-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.slide-zoom img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.slide-zoom:focus-visible {
+  outline: 1px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* Overlay. Backdrop always darkens, so the fixed -dark cursor pair and
+   literal white UI are correct in both themes. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  pointer-events: none;
+  /* keep painted through the close animation, then hide */
+  transition: visibility 0s linear 0.65s;
+}
+
+.lightbox.is-open {
+  visibility: visible;
+  pointer-events: auto;
+  transition: none;
+}
+
+html.lb-lock { overflow: hidden; }
+
+/* The backdrop only enters the render tree while the lightbox is
+   mounted (display toggle): a permanent full-viewport backdrop-filter
+   would keep the whole page on an expensive compositing path. The blur
+   itself is constant; animating the element's opacity fades the whole
+   effect in softly. */
+.lb-backdrop {
+  position: absolute;
+  inset: 0;
+  display: none;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
+  transition: opacity 0.6s var(--ease-graceful);
+}
+
+.lightbox.is-mount .lb-backdrop { display: block; }
+.lightbox.is-open .lb-backdrop { opacity: 1; }
+
+/* Click zones: left/right halves, archive-style directional cursors */
+.lb-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+}
+
+.lb-zone-prev { left: 0; cursor: var(--cursor-prev-dark); }
+.lb-zone-next { right: 0; cursor: var(--cursor-next-dark); }
+
+/* The figure ignores pointer events so directional clicks land on the
+   zones beneath; the close button re-enables its own. */
+.lb-figure {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s var(--ease-graceful);
+}
+
+.lightbox.is-open .lb-figure { opacity: 1; }
+
+.lb-img,
+.lb-video {
+  display: block;
+  width: min(80svh, 86vw);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+  transition: opacity 0.18s ease;
+}
+
+/* Carousel slides are square and crop to fit. Archive entries carry
+   their own aspect ratio (--lb-ar, set per image by main.js) and are
+   shown whole, sized to the larger of the two viewport limits. */
+.lightbox.lb-fit {
+  --lb-w: min(86vw, calc(80svh * var(--lb-ar, 1)));
+}
+
+.lightbox.lb-fit .lb-img,
+.lightbox.lb-fit .lb-video {
+  width: var(--lb-w);
+  aspect-ratio: var(--lb-ar, 1);
+  object-fit: contain;
+}
+
+/* Traditional top-right close, on the page's 20px margin rhythm */
+.lb-close {
+  position: absolute;
+  top: var(--margin);
+  right: var(--margin);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0;
+  /* Entry is a delayed fade only; transform stays free (and undelayed)
+     for the hover grow, matching the carousel arrows */
+  transition:
+    opacity 0.4s var(--ease-graceful) 0.25s,
+    transform 0.35s var(--ease-graceful);
+}
+
+.lightbox.is-open .lb-close { opacity: 1; }
+
+.lb-close:hover { transform: scale(1.06); }
+.lb-close:active { transform: scale(0.96); }
+
+.lb-close svg { display: block; }
+
+.lb-close:focus-visible {
+  outline: 1px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* Opened with a pointer: no ring. main.js focuses the close button so
+   the dialog owns the keyboard, and Chrome matches :focus-visible on
+   that programmatic focus even after a mouse click, which drew a ring
+   around the close circle for everyone. Pressing Tab drops the class
+   and the ring returns. */
+.lightbox.lb-no-ring .lb-close:focus-visible { outline: none; }
+
+/* Absolutely anchored so the image (not image + counter) is what
+   centres in the viewport: 50% + half the image height + 32px gap */
+.lb-counter {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + min(40svh, 43vw) + 32px);
+  transform: translateX(-50%);
+  z-index: 1;
+  font-size: 16px;
+  color: #ffffff;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-graceful) 0.25s;
+}
+
+.lightbox.lb-fit .lb-counter {
+  top: calc(50% + var(--lb-w) / var(--lb-ar, 1) / 2 + 32px);
+}
+
+.lightbox.is-open .lb-counter { opacity: 1; }
+
+/* On the way out the close button and counter drop their entry delay
+   so they clear the stage while the image flies home */
+.lightbox:not(.is-open) .lb-close,
+.lightbox:not(.is-open) .lb-counter {
+  transition-delay: 0s;
+}
+
+.lb-counter .lb-total { color: rgba(255, 255, 255, 0.5); }
+
+/* No lightbox off desktop (per Nick 2026-10-12): the loupe goes and the
+   tiles stop reading as clickable. Mirrors lightboxMQ in main.js, which
+   is what actually declines the click. */
+@media (max-width: 1024px), (hover: none), (pointer: coarse) {
+  .slide-zoom { display: none; }
+
+  .slide:has(.slide-zoom),
+  .va-tile { cursor: auto; }
+}
+
+/* ---------------------------------------------------------------
+   Kind words
+--------------------------------------------------------------- */
+
+.kind-words {
+  margin-top: clamp(120px, 16vw, 233px);
+}
+
+.kind-words-label {
+  grid-column: 3 / 6;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  color: var(--label);
+  white-space: nowrap;
+}
+
+/* The rule sits on the label's x-height centre (it did at 0.72em under
+   Suisse/1.35 too). Otto's shorter x-height inside the fixed 30px line
+   box puts that centre at 17.57px, so this is a px value now: the line
+   box no longer scales with the font-size, and an em would just hide
+   what it is measuring from. Re-measure it if the label's size or
+   line-height changes. */
+.kind-words-label::after {
+  content: '';
+  height: 1px;
+  width: 80px;
+  background: var(--label); /* always the label text grey */
+  margin-top: 17px;
+}
+
+.kind-words-quotes { grid-column: 6 / 11; }
+
+/* Type comes from the body-scale Otto groups above; the figcaption
+   keeps its own 14px site-sans setting. */
+
+/* Testimonial focus (reference/testimonial-interaction.png): each quote
+   settles everything EXCEPT its key phrase back to --muted, leaving that
+   phrase at full --fg. Sampled from the reference: the dimmed text is
+   #808080, which is exactly --muted on black, and the phrase is #ffffff
+   = --fg, so both are already tokens and the pair follows the theme.
+   .is-focused is per-QUOTE, not on the section: main.js staggers it
+   (first quote 3s after the section lands, second at 6s) so each one
+   changes while the reader is on it. One-way; never cleared. */
+.quote blockquote p {
+  transition: color 0.9s var(--ease-graceful);
+}
+
+.quote.is-focused blockquote p {
+  color: var(--muted);
+}
+
+/* Held at --fg rather than left to inherit, so it stays put while the
+   text around it dims. */
+.quote.is-focused .quote-key {
+  color: var(--fg);
+}
+
+.quote + .quote { margin-top: 150px; }
+
+/* Author info is the site sans, not Otto. Family, weight AND tracking
+   all have to be restated, because it inherits the quote's Otto family
+   and the quote's letter-spacing COMPUTED at 26px, which at 14px reads
+   far tighter than the sans tracking everything else uses. */
+.quote figcaption {
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: var(--sans-weight);
+  letter-spacing: var(--sans-tracking);
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 14px;
+  align-items: center;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.quote .avatar {
+  grid-row: 1 / 3;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.quote .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* The author NAME is Otto per Nick (2026-09-30); the role stays in the
+   sans the figcaption restates. Tracking declared here computes at the
+   caption's own 14px, per the em letter-spacing caveat. */
+.quote .name {
+  font-family: var(--otto);
+  font-weight: var(--otto-weight);
+  letter-spacing: var(--otto-tracking);
+  font-synthesis: none;
+}
+
+.quote .role { color: var(--role); }
+
+/* ---------------------------------------------------------------
+   Why work with me
+--------------------------------------------------------------- */
+
+.why {
+  margin-top: clamp(120px, 16vw, 233px);
+}
+
+.why-inner {
+  grid-column: 6 / 12;
+}
+
+.why h2 {
+  color: var(--label);
+}
+
+.why p {
+  margin-top: 32px;
+}
+
+.cta-row {
+  display: flex;
+  gap: 22px;
+  margin-top: 60px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 62px;
+  padding: 0 42px;
+  border-radius: 999px;
+  font-size: 16px;
+  letter-spacing: var(--sans-tracking);
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.35s var(--ease-graceful), opacity 0.3s ease;
+}
+
+.btn { --roll-h: 22px; }
+
+.btn:hover { transform: scale(1.03); }
+.btn:active { transform: scale(0.97); }
+
+.btn-primary { background: var(--fg); color: var(--bg); }
+.btn-secondary { background: var(--surface); color: var(--fg); }
+
+.btn:focus-visible {
+  outline: 1px solid var(--muted-strong);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------
+   404 (reference/404.png)
+   One centred screen with no nav or footer: the three pills are the
+   navigation. Measured off the mock at 1440x887.
+--------------------------------------------------------------- */
+
+body[data-page='404'] {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nf-main {
+  flex: 1;
+  /* Centres the whole group (top of the figures to the foot of the
+     pills) on the VIEWPORT, not on the space the footer leaves: the top
+     padding is the bottom's 40px plus the 73px footer, less the 26px of
+     empty line box above the figures */
+  padding: 87px var(--margin) 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.nf-code,
+.nf-copy,
+.nf-pill {
+  font-family: var(--otto);
+  font-weight: var(--otto-weight);
+  letter-spacing: var(--otto-tracking);
+  font-synthesis: none;
+}
+
+/* Otto's default figures are old-style (the 4s hang below the baseline);
+   the mock sets the lining set, all three on one height */
+.nf-figure {
+  --nf-size: 193px; /* 140px-tall figures, as drawn */
+  position: relative;
+}
+
+.nf-code {
+  font-variant-numeric: lining-nums;
+  font-size: var(--nf-size);
+  line-height: 1;
+  color: var(--fg);
+}
+
+/* Same pre-paint hold as the intro: hidden until main.js has split it */
+.anim-intro .nf-code:not(.is-split) { visibility: hidden; }
+
+/* The intro's sweep, scaled to the type: its 10px rise and blur are
+   lost on figures this size, and three chars need longer than 0.8s
+   to read as a sweep at all */
+.nf-code .reveal-char { transition-duration: 1.4s; }
+
+.nf-code:not(.is-play) .reveal-char {
+  filter: blur(24px);
+  transform: translateY(0.22em);
+}
+
+.nf-copy {
+  margin-top: 19px;
+  font-size: 22px;
+  line-height: 27px;
+  color: var(--fg);
+}
+
+.nf-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 11px;
+  margin-top: 36px;
+}
+
+.nf-pill {
+  --roll-h: 20px;
+  height: 37px;
+  padding: 0 17px;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  font-size: 14px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+
+.nf-pill:hover { background: var(--surface-hover); }
+
+.nf-pill:focus-visible {
+  outline: 1px solid var(--muted-strong);
+  outline-offset: 3px;
+}
+
+/* The sad face in the 0 (images/404/eye.svg + mouth.svg, placed off
+   the mock). The marks are textured marker outlines, not strokes, so
+   they cannot be drawn with a dash offset: each is a --fg block masked
+   by its SVG (which is what lets it follow the theme), and the "pen" is
+   a clip-path wipe in the direction the stroke would be made. Sized in
+   em off the numerals' font-size so the face scales with them. The
+   origin is the top-centre of the 0's ink: 0.135em of empty line box
+   above the figures, and the 0 sits 0.013em right of the group's centre. */
+.nf-face {
+  position: absolute;
+  left: calc(50% + 0.013em);
+  top: 0.135em;
+  font-size: var(--nf-size);
+  pointer-events: none;
+}
+
+.nf-eye,
+.nf-mouth {
+  position: absolute;
+  background: var(--fg);
+  -webkit-mask: center / 100% 100% no-repeat;
+  mask: center / 100% 100% no-repeat;
+}
+
+.nf-eye {
+  width: 0.0725em;
+  height: 0.212em;
+  -webkit-mask-image: url('../images/404/eye.svg');
+  mask-image: url('../images/404/eye.svg');
+}
+
+.nf-eye-l { left: -0.093em; top: 0.176em; }
+.nf-eye-r { left: 0.026em; top: 0.187em; }
+
+.nf-mouth {
+  left: -0.143em;
+  top: 0.461em;
+  width: 0.275em;
+  height: 0.094em;
+  -webkit-mask-image: url('../images/404/mouth.svg');
+  mask-image: url('../images/404/mouth.svg');
+}
+
+/* Drawn on last, after the footer has landed: eye, eye, then the
+   frown, each a quick stroke with a beat between like a hand lifting
+   the pen. The one place the site leaves --ease-graceful: its long tail
+   makes a pen stroke crawl to a stop, so these ease in and out. */
+/* The opacity step is not a fade: a fully clipped mark still leaks a
+   hairline of its first edge on 2x screens, which sat there as a speck
+   through the whole delay */
+@keyframes nf-draw-down {
+  from { clip-path: inset(0 0 100% 0); opacity: 0; }
+  1% { opacity: 1; }
+  to { clip-path: inset(0); }
+}
+
+@keyframes nf-draw-across {
+  from { clip-path: inset(0 100% 0 0); opacity: 0; }
+  1% { opacity: 1; }
+  to { clip-path: inset(0); }
+}
+
+.anim-intro .nf-eye {
+  animation: nf-draw-down 0.32s cubic-bezier(0.6, 0, 0.3, 1) backwards;
+}
+
+.anim-intro .nf-eye-l { animation-delay: 2.9s; }
+.anim-intro .nf-eye-r { animation-delay: 3.35s; }
+
+.anim-intro .nf-mouth {
+  animation: nf-draw-across 0.5s cubic-bezier(0.6, 0, 0.3, 1) 3.95s backwards;
+}
+
+/* Load reveal: the copy and the pills rise in as the 404 sweep lands */
+.anim-intro .nf-copy {
+  animation: rise-in 0.9s var(--ease-graceful) 1.05s backwards;
+}
+
+.anim-intro .nf-pill {
+  animation: rise-in 0.9s var(--ease-graceful) backwards;
+}
+
+.anim-intro .nf-pill:nth-child(1) { animation-delay: 1.25s; }
+.anim-intro .nf-pill:nth-child(2) { animation-delay: 1.38s; }
+.anim-intro .nf-pill:nth-child(3) { animation-delay: 1.51s; }
+
+body[data-page='404'] .site-footer { margin-top: 0; }
+
+.anim-intro body[data-page='404'] .site-footer {
+  animation: rise-in 0.9s var(--ease-graceful) 1.7s backwards;
+}
+
+@media (max-width: 640px) {
+  /* 404 is 1.66em wide: scale it with the screen so it clears the margins */
+  .nf-figure { --nf-size: min(193px, 46vw); }
+
+  /* The first line is 359px at 22px, wider than a phone's column,
+     so the designed break goes and the lines balance instead */
+  .nf-copy { text-wrap: balance; }
+  .nf-copy br { display: none; }
+}
+
+/* ---------------------------------------------------------------
+   Footer
+--------------------------------------------------------------- */
+
+.site-footer {
+  margin-top: clamp(140px, 17vw, 250px);
+  padding: var(--margin);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: baseline;
+  font-size: 15px;
+}
+
+.footer-email {
+  --roll-h: 20px;
+  display: inline-block;
+}
+
+/* Copied pill: absolutely anchored off the address so its appearance
+   never shifts the footer row. Revealed by .is-copied on the cell
+   (set by main.js after the clipboard write lands). */
+.footer-email-cell {
+  position: relative;
+  justify-self: start;
+  display: flex; /* height hugs the roll so the pill centres on the text */
+}
+
+.footer-copied-pill {
+  position: absolute;
+  left: calc(100% + 14px);
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-6px, -50%);
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.55s var(--ease-graceful);
+}
+
+.footer-email-cell.is-copied .footer-copied-pill {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+.footer-copy { text-align: right; }
+.footer-copy .mark { margin-right: 4px; }
+
+/* Footer settings (footer-settings-bubble refs, 2026-10-15): the
+   Settings pill reads "Done" while open, and the Theme and Sound
+   toggles bubble out from behind it, Theme on the left, Sound on the
+   right, 7px clear of the pill. No labels: the knob icons (sun/moon,
+   speaker on/off) say what each one is. Measured off the light refs
+   at 1440: 55x33 tracks on --surface (the pill's own grey), 29px knob
+   inset 2px. Track and knob
+   colours are tokens: --surface, --settings-knob(-shadow). */
+.footer-settings {
+  position: relative;
+  display: flex;
+}
+
+.settings-btn {
+  --roll-h: 20px;
+  position: relative;
+  z-index: 1; /* the toggles tuck in behind it */
+  display: inline-flex;
+  align-items: center;
+  height: 33px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 15px;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+
+.settings-btn:focus-visible {
+  outline: 1px solid var(--muted-strong);
+  outline-offset: 3px;
+}
+
+/* Settings / Done share one grid cell, so the pill keeps the width of
+   the longer word (the ref holds 88px both ways) and Done sits centred.
+   The swap rides the same rise as the roll: the outgoing word lifts out
+   of the top while the incoming one comes up from below. Each word is
+   its own .roll, so hover still rolls whichever is showing. */
+.settings-label {
+  display: grid;
+  overflow: hidden;
+}
+
+.settings-label > .roll {
+  grid-area: 1 / 1;
+  justify-self: center;
+  transition:
+    transform 0.55s var(--ease-graceful),
+    opacity 0.3s ease;
+}
+
+.lbl-done {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.footer-settings.is-open .lbl-settings {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.footer-settings.is-open .lbl-done {
+  opacity: 1;
+  transform: none;
+}
+
+/* The toggles: parked behind the pill (slid in toward its centre,
+   scaled down, faded), and out of the tab order via visibility, which
+   flips only after the fade-out. Open, they slide out to the pill's
+   sides and grow to full size. */
+.settings-toggle {
+  position: absolute;
+  top: 0;
+  display: block;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    transform 0.6s var(--ease-graceful),
+    visibility 0s linear 0.3s;
+}
+
+.tg-theme {
+  right: calc(100% + 7px);
+  transform: translateX(calc(100% + 7px)) scale(0.85);
+}
+
+.tg-sound {
+  left: calc(100% + 7px);
+  transform: translateX(calc(-100% - 7px)) scale(0.85);
+}
+
+.footer-settings.is-open .settings-toggle {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  /* Opening only, a faint spring (per Nick 2026-10-16, the one bounce
+     on the site): ~5% overshoot, about 3px past the slot (per Nick),
+     peaking ~0.3s in. Closing keeps --ease-graceful from the base rule, since a
+     bounce tucking back behind the pill would only read as wobble. */
+  transition:
+    opacity 0.25s ease,
+    transform 0.55s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+/* Native checkbox carries semantics and keyboard (space toggles);
+   stretched over the toggle so the whole control is the hit area. */
+.settings-toggle input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.settings-track {
+  display: block;
+  position: relative;
+  width: 55px;
+  height: 33px;
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+/* Checked = knob right = dark mode / sound on; the knob's icon shows
+   the CURRENT state. 22px of travel (55 - 2 - 2 - 29). */
+.settings-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  background: var(--settings-knob);
+  box-shadow: var(--settings-knob-shadow);
+  color: var(--fg);
+  transition: transform 0.5s var(--ease-graceful);
+}
+
+.settings-toggle input:checked + .settings-track .settings-knob {
+  transform: translateX(22px);
+}
+
+/* Both state icons stack in the knob's single grid cell; the active
+   one is full-size, the other shrinks + turns away. The incoming icon
+   trails the knob slightly so it lands as the slide settles. */
+.settings-knob svg {
+  grid-area: 1 / 1;
+  transition:
+    opacity 0.25s ease,
+    transform 0.5s var(--ease-graceful);
+}
+
+.settings-toggle .tg-icon-on,
+.settings-toggle input:checked + .settings-track .tg-icon-off {
+  opacity: 0;
+  transform: scale(0.4) rotate(-60deg);
+}
+
+.settings-toggle input:checked + .settings-track .tg-icon-on {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.1s;
+}
+
+.settings-toggle .tg-icon-off { transition-delay: 0.1s; }
+
+.settings-toggle input:checked + .settings-track .tg-icon-off {
+  transition-delay: 0s;
+  transform: scale(0.4) rotate(60deg);
+}
+
+.settings-toggle input:focus-visible + .settings-track {
+  outline: 1px solid var(--muted-strong);
+  outline-offset: 3px;
+}
+
+/* The email and copyright step aside while the toggles are out on
+   phones, where the row has no room for all five. Desktop leaves them
+   be: the toggles clear them by hundreds of px. */
+.footer-email-cell,
+.footer-copy {
+  transition: opacity 0.3s ease;
+}
+
+/* ---------------------------------------------------------------
+   Responsive
+--------------------------------------------------------------- */
+
+/* Large displays: cap line lengths while keeping grid alignment */
+@media (min-width: 1441px) {
+  .project-acc-panel p { max-width: 500px; }
+
+  .acc-body-inner p { max-width: 460px; }
+
+  .kind-words-quotes,
+  .why-inner {
+    max-width: 760px;
+  }
+}
+
+/* Large screens (Studio Display and up): 4 slides + peek of the 5th,
+   which lands slide widths back near the designed 450px */
+@media (min-width: 1920px) {
+  :root { --slides-visible: 4; }
+
+  /* The 4th visible slide gets its own reveal slot; the peek and the
+     rest share the tail */
+  .anim-intro .project:first-of-type .slide { animation-delay: 2.83s; }
+  .anim-intro .project:first-of-type .slide:nth-child(4) { animation-delay: 2.73s; }
+}
+
+@media (max-width: 1024px) {
+  :root { --slides-visible: 2; }
+
+  .kind-words { row-gap: 48px; }
+
+  .kind-words-label,
+  .kind-words-quotes,
+  .why-inner {
+    grid-column: 1 / -1;
+  }
+
+  /* Contact: the pinned two-column screen needs more width than a
+     tablet has (the 44px address overruns the Connect column), so the
+     columns stack and the page flows. Hover behavior stays desktop. */
+  body[data-page='contact'] {
+    height: auto;
+    overflow: visible;
+  }
+
+  .contact-main {
+    position: static;
+    margin-top: 120px;
+  }
+
+  .contact-email-col,
+  .contact-connect-col {
+    grid-column: 1 / -1;
+  }
+
+  .contact-connect-col { margin-top: 90px; }
+
+  body[data-page='contact'] .site-footer { margin-top: 140px; }
+}
+
+@media (max-width: 640px) {
+  /* Wider peek than desktop's 10px: with one card up, the sliver of
+     the next is what says the row scrolls */
+  :root {
+    --slides-visible: 1;
+    --peek: 32px;
+  }
+
+  .site-header {
+    padding-top: 160px;
+  }
+
+  /* Intro on phones: keeps the desktop ABC Otto 24px/26px, full grid
+     width on every page */
+  .intro { grid-column: 1 / -1; }
+
+  /* Nav collapses behind the Menu pill (reference/mobile-menu-*.png).
+     Open: links drop in top to bottom on the desktop --nav-rhythm.
+     Close: reverse, bottom link first, rising back toward the pill. */
+  .site-nav {
+    /* 16px labels on phones (14px desktop). 24px keeps the desktop's 4px
+       half-leading, and as the roll clip it clears the larger glyphs. */
+    --nav-rhythm: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .site-nav a,
+  .nav-sub { font-size: 16px; }
+
+  .menu-btn {
+    display: inline-flex;
+    align-items: center;
+    height: 30px;
+    padding: 0 12px; /* Menu renders 64px wide at 16px (55px in the 14px mock) */
+    border: 0;
+    border-radius: 999px;
+    background: var(--menu-pill); /* pre-inverted: renders as --surface */
+    color: #ffffff;
+    font: inherit;
+    font-size: 16px;
+    letter-spacing: inherit;
+    cursor: pointer;
+    transition: opacity 0.4s ease;
+  }
+
+  /* On load the pill fades in with the nav dots */
+  html.anim-intro:not(.nav-in) .menu-btn { opacity: 0; }
+
+  .site-nav ul {
+    margin-top: 15px;
+    padding-right: 12px; /* labels inset so the active dot lands on the 20px margin */
+    visibility: hidden;
+    transition: visibility 0s linear 0.8s;
+  }
+
+  .site-nav.is-menu-open ul {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .site-nav > ul > li {
+    opacity: 0;
+    transform: translateY(-12px);
+    transition: opacity 0.4s ease, transform 0.55s var(--ease-graceful);
+  }
+
+  .site-nav > ul > li:nth-child(1) { transition-delay: 0.21s; }
+  .site-nav > ul > li:nth-child(2) { transition-delay: 0.14s; }
+  .site-nav > ul > li:nth-child(3) { transition-delay: 0.07s; }
+  .site-nav > ul > li:nth-child(4) { transition-delay: 0s; }
+
+  .site-nav.is-menu-open > ul > li {
+    opacity: 1;
+    transform: none;
+  }
+
+  .site-nav.is-menu-open > ul > li:nth-child(1) { transition-delay: 0.05s; }
+  .site-nav.is-menu-open > ul > li:nth-child(2) { transition-delay: 0.13s; }
+  .site-nav.is-menu-open > ul > li:nth-child(3) { transition-delay: 0.21s; }
+  .site-nav.is-menu-open > ul > li:nth-child(4) { transition-delay: 0.29s; }
+
+  /* No hover on touch: [ Design / Logos ] shows whenever the menu is
+     open, as in the mock */
+  .site-nav.is-menu-open .nav-sub {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .project { display: flex; flex-direction: column; }
+
+  .project-header { display: contents; }
+
+  /* A tagline that will not fit beside its title drops WHOLE to its own
+     line instead of wrapping mid-phrase (Jointly, We Who Wander at 393).
+     Flex wrap does that per title with no measuring: the title text and
+     the tagline are the two items, and the 10px gap moves from the
+     tagline's margin to column-gap so a dropped tagline is not indented.
+     The .sr-only comma is absolutely positioned, so it is not an item. */
+  .project-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 10px;
+    row-gap: 4px; /* only a dropped tagline has a second row to space */
+    padding: 0 var(--margin);
+  }
+
+  .project-title .tagline { margin-left: 0; }
+
+  /* Real accordion manners on phones: each panel opens directly under
+     its own row (the info page's mobile behavior), keeping the home
+     text styles. The two wrappers dissolve (display: contents) so rows
+     and panels interleave as flex items of .project via order; the
+     row fade / sign morph selectors still match, as they key off the
+     DOM, not the boxes. */
+  .project-acc,
+  .project-acc-content { display: contents; }
+
+  .project-acc-item {
+    width: auto;
+    margin: 0 var(--margin);
+  }
+
+  .project-acc-item[data-panel='info'] {
+    order: 1;
+    margin-top: 20px;
+  }
+
+  .project-acc-item[data-panel='credits'] { order: 3; }
+
+  /* Panels animate open like the info accordion: 0fr -> 1fr rows with
+     the single child (p or ul) as the clipped inner. Its breathing room
+     is transitioned padding: static padding on the inner would hold the
+     closed height at the padding sum (border-box). */
+  .project-acc-panel {
+    position: static;
+    margin: 0 var(--margin);
+    padding: 0;
+    display: grid;
+    grid-template-rows: 0fr;
+    /* Opaque: the fade lives on the inner, so the credits panel's
+       closing divider stays visible while the panel is shut */
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    max-height: none;
+    overflow-y: visible;
+    transition: grid-template-rows 0.5s var(--ease-graceful);
+  }
+
+  .project-acc-panel-info { order: 2; }
+  .project-acc-panel-credits { order: 4; }
+
+  /* The closing divider hangs off the credits PANEL here, not the last
+     row, so it drops with the content like the divider under Project
+     Info (which is the credits row's own top border). Closed, the
+     panel is 0 high and the line sits right under the row as before. */
+  .project-acc .project-acc-item:last-child { border-bottom: 0; }
+
+  .project-acc-panel-credits { border-bottom: 1px solid var(--acc-rule); }
+
+  .project-acc-panel > * {
+    overflow: hidden;
+    min-height: 0;
+    padding: 0;
+    opacity: 0;
+    transition:
+      padding 0.5s var(--ease-graceful),
+      opacity 0.3s ease;
+  }
+
+  .project-header[data-open='info'] .project-acc-panel-info,
+  .project-header[data-open='credits'] .project-acc-panel-credits {
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.5s var(--ease-graceful);
+  }
+
+  .project-header[data-open='info'] .project-acc-panel-info > *,
+  .project-header[data-open='credits'] .project-acc-panel-credits > * {
+    padding: 5px 0 12px;
+    opacity: 1;
+    transition:
+      padding 0.5s var(--ease-graceful),
+      opacity 0.4s ease 0.1s;
+  }
+
+  /* The load reveal's rise lands on the rows themselves here: the
+     display: contents wrapper has no box to animate. The credits panel
+     rides along because it carries the closing divider, which would
+     otherwise sit visible from the first frame. */
+  .anim-intro .project:first-of-type .project-acc-item,
+  .anim-intro .project:first-of-type .project-acc-panel-credits {
+    animation: rise-in 0.9s var(--ease-graceful) 2.3s backwards;
+  }
+
+  .carousel {
+    order: 5;
+    margin-top: 32px;
+  }
+
+  /* Swiping is the navigation on phones: the arrows go away, the
+     pagination dots take their place
+     (reference/mobile-project-pagination.png: 8px dots on an 18px
+     pitch in a 24px pill) */
+  .carousel-arrows {
+    display: none;
+  }
+
+  .carousel-dots {
+    order: 6;
+    display: flex;
+    align-self: center;
+    gap: 10px;
+    margin-top: 24px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: var(--dots-pill);
+  }
+
+  .carousel-dots button {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--dots-idle);
+    transition: background 0.3s ease;
+    cursor: pointer;
+  }
+
+  /* Tap target grows to the full 18px pitch; the dot stays 8px */
+  .carousel-dots button::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+  }
+
+  .carousel-dots button.is-active { background: var(--fg); }
+
+  .carousel-dots button:focus-visible {
+    outline: 1px solid var(--muted-strong);
+    outline-offset: 3px;
+  }
+
+  /* The dots inherit the arrows' load-reveal slot */
+  .anim-intro .project:first-of-type .carousel-dots {
+    animation: rise-in 0.9s var(--ease-graceful) 2.95s backwards;
+  }
+
+  .quote + .quote { margin-top: 80px; }
+
+  /* Testimonials step down on phones per Nick (2026-10-12): 24/28 quote
+     text, a tighter drop to the author row, and the name up to 16px.
+     The why-me paragraph follows the quotes; the two italic section
+     headings (Kind Words, Why work with me?) keep the shared 26/30. */
+  .quote,
+  .why p {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .quote figcaption { margin-top: 26px; }
+
+  /* Home CTAs sit side by side on phones instead of stacking. The pair
+     spans the margins: nowrap, and equal flex-grow hands each button the
+     same spare width, so both keep identical side padding at any phone
+     width (about 21px at 393, 17px at 375; 12px is the floor). Shorter
+     to suit the narrower pills. */
+  .cta-row {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .cta-row .btn {
+    flex: 1 1 auto;
+    height: 52px;
+    padding: 0 12px;
+    white-space: nowrap;
+  }
+
+  .quote .name { font-size: 16px; }
+
+  /* Info page stacks: accordion list, then the headshot, then the
+     office pill. The pill is NOT sticky on phones (per Nick 2026-10-12:
+     floating over the accordion titles was distracting): it sits in the
+     flow, centred 32px under the photo. The window still opens above
+     the pill, nearly full-width, but anchored to the dock instead of the
+     viewport, so it overlays the foot of the photo and scrolls with the
+     page. The band's bottom margin only cleared the fixed pill. */
+  .info-band { margin-bottom: 0; }
+
+  .office-dock {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+  }
+
+  .office-btn {
+    position: static;
+    margin-inline: 0;
+  }
+
+  .office-cam {
+    --office-open-w: calc(100vw - 40px);
+    --office-open-h: calc((100vw - 40px) / 1.5);
+    position: absolute;
+    bottom: calc(100% + 18px);
+  }
+
+  .acc-col { grid-column: 1 / -1; }
+
+  .info-photo {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    width: auto; /* drop the desktop accordion-height cap */
+    margin-top: 48px;
+  }
+
+  /* Panels flow back under their rows on phones (the desktop card is
+     display-toggled away, home accordion manners) */
+  .acc-body {
+    position: static;
+    width: auto;
+    max-height: none; /* phones flow and scroll the page, not the card */
+    overflow: visible;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    transform: none;
+    visibility: visible;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 0.5s var(--ease-graceful),
+      opacity 0.3s ease;
+  }
+
+  .acc-item.is-open .acc-body {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition:
+      grid-template-rows 0.5s var(--ease-graceful),
+      opacity 0.4s ease 0.1s;
+  }
+
+  /* Rows sit almost flush with their rules on phones (per Nick
+     2026-10-12): titles 4px in, plus signs 6px in, against 22/24 on
+     desktop. The open panel's copy takes the same pair so it stays
+     under its title. */
+  .acc-head button {
+    padding-left: 4px;
+    padding-right: 6px;
+  }
+
+  .acc-body h3,
+  .acc-body p,
+  .acc-body ul {
+    padding: 0 6px 0 4px;
+  }
+
+  .acc-body-inner > :last-child { padding-bottom: 28px; }
+
+  /* Contact page stacks and flows: a fixed single screen would run the
+     columns into each other on short phones */
+  body[data-page='contact'] {
+    height: auto;
+    overflow: visible;
+  }
+
+  .contact-main {
+    position: static;
+    margin-top: 100px;
+  }
+
+  .contact-email-col,
+  .contact-connect-col {
+    grid-column: 1 / -1;
+  }
+
+  .contact-connect-col { margin-top: 80px; }
+
+  .contact-link {
+    --roll-h: 38px;
+    font-size: 32px;
+    line-height: 38px;
+  }
+
+  .contact-link svg { width: 18px; height: 18px; }
+
+  .email-row,
+  .connect-list {
+    margin-top: 32px;
+  }
+
+  /* Phones show the address alone (per Nick 2026-10-12): no resting Copy
+     Email pill. Tapping the address copies it, and the pill appears
+     under it only as the "Copied to clipboard" confirmation, then fades
+     with the usual dismiss. It hangs off the row absolutely (16px below,
+     inside the 80px gap above Connect) so its coming and going never
+     shifts the page. The hover/focus selectors are restated because a
+     tap leaves both stuck on touch, and they would otherwise show the
+     resting pill; the pill is not a control here (the address is). */
+  .email-row { position: relative; }
+
+  .email-row .copy-email-btn,
+  .email-row:hover .copy-email-btn,
+  .email-row:focus-within .copy-email-btn {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 0;
+    margin-left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition:
+      opacity 0.3s ease,
+      transform 0.55s var(--ease-graceful),
+      visibility 0s linear 0.3s;
+  }
+
+  .email-row:not(.is-dismissed) .copy-email-btn.is-copied {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  body[data-page='contact'] .site-footer { margin-top: 120px; }
+
+  /* Footer keeps the desktop one-line layout (email / Settings /
+     copyright); the type steps down so all three fit a 375px screen.
+     The centred settings pill also means the panel can centre on it
+     again, so no left-anchor override is needed. The Settings pill
+     restates its own size, so it is stepped down here too. */
+  .site-footer,
+  .settings-btn { font-size: 13px; }
+
+  /* Keep the pill (and the toggles hung off it) dead-centre whatever
+     the text widths do. With plain 1fr sides, an email wider than its
+     half pushed its column out, so the pill sat off-centre and moved
+     on every theme switch (the sans changes weight with the theme).
+     minmax(0, 1fr) holds the halves equal; the pill's sides trim 2px so
+     the address (128px at 13px) still clears it at 375. */
+  .site-footer { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+  .settings-btn { padding: 0 14px; }
+
+  /* The open toggles need the whole row: the email and copyright fade
+     out until Done (per Nick 2026-10-15). */
+  .site-footer.settings-open :is(.footer-email-cell, .footer-copy) {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* The copied pill rises ABOVE the address on phones: beside it there
+     is no room, it ran under the centred Settings pill. Left edges
+     align, 12px clear of the text. */
+  .footer-copied-pill {
+    left: 0;
+    top: auto;
+    bottom: calc(100% + 12px);
+    z-index: 2;
+    transform: translateY(6px);
+  }
+
+  .footer-email-cell.is-copied .footer-copied-pill { transform: none; }
+}
+
+/* Under ~370px equal halves can't hold the address, so the sides go
+   back to sizing to their text: the row still fits, at the cost of the
+   pill sitting a few px off-centre. */
+@media (max-width: 369px) {
+  .site-footer { grid-template-columns: 1fr auto 1fr; }
+}
+
+/* ---------------------------------------------------------------
+   Reduced motion
+--------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* The side-by-side home CTAs need 357px to hold both labels at the 12px
+   padding floor. Narrower phones go back to stacking, full width, rather
+   than pushing the page sideways. */
+@media (max-width: 360px) {
+  .cta-row { flex-wrap: wrap; }
+}
